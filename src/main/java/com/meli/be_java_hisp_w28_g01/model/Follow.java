@@ -10,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public abstract class User {
-    int id;
-    String name;
+public class Follow {
+    Seller seller;
+    Buyer buyer;
 }
