@@ -3,6 +3,7 @@ package com.meli.be_java_hisp_w28_g01.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meli.be_java_hisp_w28_g01.dto.FollowDto;
 import com.meli.be_java_hisp_w28_g01.dto.FollowersDto;
+import com.meli.be_java_hisp_w28_g01.exception.NotFoundException;
 import com.meli.be_java_hisp_w28_g01.model.Follow;
 import com.meli.be_java_hisp_w28_g01.model.Seller;
 import com.meli.be_java_hisp_w28_g01.repository.IFollowRepository;
@@ -58,7 +59,7 @@ public class FollowServiceImpl implements IFollowService {
         Optional<Seller> seller = sellerService.findById(userId);
 
         if (seller.isEmpty()) {
-            // Throw exception id not found
+            throw new NotFoundException(userId, "vendedor");
         }
 
         followList = followList.stream().filter(f -> f.getSeller().getId() == userId).toList();
