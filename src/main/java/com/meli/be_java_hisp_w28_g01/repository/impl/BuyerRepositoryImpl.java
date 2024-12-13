@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meli.be_java_hisp_w28_g01.model.Buyer;
 import com.meli.be_java_hisp_w28_g01.repository.IBuyerRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
@@ -13,6 +14,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class BuyerRepositoryImpl implements IBuyerRepository {
     private List<Buyer> listOfBuyers = new ArrayList<>();
 
