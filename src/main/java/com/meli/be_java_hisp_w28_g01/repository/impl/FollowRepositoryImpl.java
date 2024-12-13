@@ -3,14 +3,19 @@ package com.meli.be_java_hisp_w28_g01.repository.impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.meli.be_java_hisp_w28_g01.model.Buyer;
 import com.meli.be_java_hisp_w28_g01.model.Follow;
+import com.meli.be_java_hisp_w28_g01.model.Seller;
 import com.meli.be_java_hisp_w28_g01.repository.IFollowRepository;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+@Repository
 public class FollowRepositoryImpl implements IFollowRepository {
+    List<Follow> follows = null;
 
     @Override
     public List<Follow> getAll() {
@@ -21,17 +26,20 @@ public class FollowRepositoryImpl implements IFollowRepository {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             TypeReference<List<Follow>> typeRef = new TypeReference<>() {};
-            List<Follow> Follows = null;
             try {
-                Follows = objectMapper.readValue(inputStream, typeRef);
+                follows = objectMapper.readValue(inputStream, typeRef);
             } catch (IOException e) {
                 throw new RuntimeException("No se pusieron obtener los datos de follows");
             }
-            return Follows;
+            return follows;
         } catch (IOException e) {
             throw new RuntimeException("Error al acceder al JSON.", e);
         }
 
+    }
 
+    public Follow addFollow(Follow newFollow){
+        follows.add(newFollow);
+        return newFollow;
     }
 }
