@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface IFollowRepository {
     List<Follow> getAll();
-    Follow addFollow(Buyer buyer, Seller seller);
+    Follow addFollow(Follow newFollow);
 }

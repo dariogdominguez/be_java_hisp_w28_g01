@@ -1,5 +1,7 @@
 package com.meli.be_java_hisp_w28_g01.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.meli.be_java_hisp_w28_g01.dto.FollowDto;
 import com.meli.be_java_hisp_w28_g01.model.Follow;
 import com.meli.be_java_hisp_w28_g01.repository.IFollowRepository;
 import com.meli.be_java_hisp_w28_g01.service.IBuyerService;
@@ -13,6 +15,8 @@ import java.util.List;
 @Service
 public class FollowServiceImpl implements IFollowService {
 
+    ObjectMapper mapper = new ObjectMapper();
+
     @Autowired
     IFollowRepository followRepository;
 
@@ -23,7 +27,7 @@ public class FollowServiceImpl implements IFollowService {
     ISellerService sellerService;
 
     @Override
-    public Follow addFollow(int userId, int userIdToFollow) {
+    public FollowDto addFollow(int userId, int userIdToFollow) {
         List<Follow> followList = followRepository.getAll();
 
         boolean thereIsBuyer = buyerService.findById(userId).isPresent();
@@ -36,7 +40,7 @@ public class FollowServiceImpl implements IFollowService {
             throw new RuntimeException("Este coprador ya sigue a este vendedor");
         }
 
-        return followRepository.addFollow(buyerService.findById(userId).get(), sellerService.findById(userIdToFollow).get());
+        return mapper.convertValue(followRepository.addFollow(new Follow(buyerService.findById(userId).get(), sellerService.findById(userIdToFollow).get())), FollowDto.class);
     }
 
     @Override

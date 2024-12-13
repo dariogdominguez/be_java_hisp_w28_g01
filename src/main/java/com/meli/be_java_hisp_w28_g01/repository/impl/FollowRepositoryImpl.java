@@ -15,7 +15,7 @@ import java.util.List;
 
 @Repository
 public class FollowRepositoryImpl implements IFollowRepository {
-    List<Follow> Follows = null;
+    List<Follow> follows = null;
 
     @Override
     public List<Follow> getAll() {
@@ -27,20 +27,19 @@ public class FollowRepositoryImpl implements IFollowRepository {
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             TypeReference<List<Follow>> typeRef = new TypeReference<>() {};
             try {
-                Follows = objectMapper.readValue(inputStream, typeRef);
+                follows = objectMapper.readValue(inputStream, typeRef);
             } catch (IOException e) {
                 throw new RuntimeException("No se pusieron obtener los datos de follows");
             }
-            return Follows;
+            return follows;
         } catch (IOException e) {
             throw new RuntimeException("Error al acceder al JSON.", e);
         }
 
     }
 
-    public Follow addFollow(Buyer buyer, Seller seller){
-        Follow newFollow = new Follow(buyer, seller);
-        Follows.add(newFollow);
+    public Follow addFollow(Follow newFollow){
+        follows.add(newFollow);
         return newFollow;
     }
 }
