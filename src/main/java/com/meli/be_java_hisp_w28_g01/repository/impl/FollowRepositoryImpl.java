@@ -14,7 +14,7 @@ public class FollowRepositoryImpl implements IFollowRepository {
     private final String filePath = "follow.json";
 
     public FollowRepositoryImpl(DataLoader dataLoader) {
-        this.listOfFollows = new ArrayList<>();
+        this.listOfFollows = dataLoader.loadDataBase(filePath);
     }
 
     @Override
