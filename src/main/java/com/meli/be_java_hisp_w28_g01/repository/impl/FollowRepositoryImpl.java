@@ -13,7 +13,7 @@ import java.util.List;
 public class FollowRepositoryImpl implements IFollowRepository {
 
     @Override
-    public List<Follow> listar() {
+    public List<Follow> getAll() {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("follow.json")) {
             if (inputStream == null) {
                 throw new RuntimeException("JSON no encontrado.");
