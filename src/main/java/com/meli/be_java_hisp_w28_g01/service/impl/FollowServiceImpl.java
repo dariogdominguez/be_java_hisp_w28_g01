@@ -2,7 +2,9 @@ package com.meli.be_java_hisp_w28_g01.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meli.be_java_hisp_w28_g01.dto.FollowDto;
+import com.meli.be_java_hisp_w28_g01.dto.FollowersDto;
 import com.meli.be_java_hisp_w28_g01.model.Follow;
+import com.meli.be_java_hisp_w28_g01.model.Seller;
 import com.meli.be_java_hisp_w28_g01.repository.IFollowRepository;
 import com.meli.be_java_hisp_w28_g01.service.IBuyerService;
 import com.meli.be_java_hisp_w28_g01.service.IFollowService;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FollowServiceImpl implements IFollowService {
@@ -46,5 +50,18 @@ public class FollowServiceImpl implements IFollowService {
     @Override
     public List<Follow> getAll() {
         return followRepository.getAll();
+    }
+
+    @Override
+    public FollowersDto getFollowersCount(int userId) {
+        List<Follow> followList = getAll();
+        Optional<Seller> seller = sellerService.findById(userId);
+
+        if (seller.isEmpty()) {
+            // Throw exception id not found
+        }
+
+        followList = followList.stream().filter(f -> f.getSeller().getId() == userId).toList();
+        return new FollowersDto(seller.get().getId(), seller.get().getName(), followList.size());
     }
 }
