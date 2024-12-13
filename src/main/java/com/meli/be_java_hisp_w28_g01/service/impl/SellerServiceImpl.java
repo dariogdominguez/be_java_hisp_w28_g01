@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SellerServiceImpl implements ISellerService {
@@ -19,12 +20,12 @@ public class SellerServiceImpl implements ISellerService {
     }
 
     @Override
-    public Seller findById(int id){
-        return sellerRepository.getAll()
+    public Optional<Seller> findById(int id){
+        Optional<Seller> seller = sellerRepository.getAll()
                 .stream()
                 .filter(m -> m.getId() == id)
-                .findFirst()
-                .orElse(null);
+                .findFirst();
+        return seller;
     }
 
 }
