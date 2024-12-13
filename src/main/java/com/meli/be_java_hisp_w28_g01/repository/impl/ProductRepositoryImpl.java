@@ -5,13 +5,14 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meli.be_java_hisp_w28_g01.model.Product;
 import com.meli.be_java_hisp_w28_g01.repository.IProductRepository;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Repository
 class ProductRepositoryImpl implements IProductRepository {
 
     private List<Product> listOfProduct = new ArrayList<>();
@@ -24,11 +25,6 @@ class ProductRepositoryImpl implements IProductRepository {
     public List<Product> getAll() {
         return listOfProduct;
     }
-
-    /*@Override
-    public Product getById(Long id) {
-        return listOfProduct.stream().filter(product -> product.getId() == id).findFirst().orElse(null);
-    }*/
 
     public List<Product> loadDataBase() {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("product.json")) {
