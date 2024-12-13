@@ -39,6 +39,8 @@ public class FollowRepositoryImpl implements IFollowRepository {
     }
 
     public Follow addFollow(Buyer buyer, Seller seller){
-        return null;
+        Follow newFollow = new Follow(buyer, seller);
+        Follows.add(newFollow);
+        return newFollow;
     }
 }

@@ -17,7 +17,6 @@ public class FollowController {
 
     @PostMapping("/users/{userId}/follow/{userIdToFollow}")
     public ResponseEntity<?> addFollow(@PathVariable int userId, @PathVariable int userIdToFollow){
-        followService.getAll();
-        return ResponseEntity.status(HttpStatus.OK).body("se recibio el userId: " + userId + " y el userIdToFollow: " + userIdToFollow);
+        return ResponseEntity.status(HttpStatus.OK).body(followService.addFollow(userId,userIdToFollow));
     }
 }
