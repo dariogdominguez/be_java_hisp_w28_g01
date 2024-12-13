@@ -1,6 +1,6 @@
 [
   {
-    "user": {
+    "seller": {
       "id": 1,
       "name": "Juan Pérez"
     },
@@ -17,7 +17,7 @@
     "price": 150.50
   },
   {
-    "user": {
+    "seller": {
       "id": 2,
       "name": "María López"
     },
@@ -34,7 +34,7 @@
     "price": 80.00
   },
   {
-    "user": {
+    "seller": {
       "id": 3,
       "name": "Carlos Martínez"
     },
@@ -51,7 +51,7 @@
     "price": 299.99
   },
   {
-    "user": {
+    "seller": {
       "id": 4,
       "name": "Ana García"
     },
@@ -68,7 +68,7 @@
     "price": 120.00
   },
   {
-    "user": {
+    "seller": {
       "id": 5,
       "name": "Pedro Ruiz"
     },

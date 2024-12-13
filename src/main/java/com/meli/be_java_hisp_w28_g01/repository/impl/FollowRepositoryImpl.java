@@ -18,6 +18,6 @@ public class FollowRepositoryImpl implements IFollowRepository {
 
     @Override
     public List<Follow> getAll() {
-        return listOfFollows;
+            return listOfFollows;
     }
 }
