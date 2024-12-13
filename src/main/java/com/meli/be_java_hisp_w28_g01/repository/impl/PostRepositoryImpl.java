@@ -5,12 +5,13 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meli.be_java_hisp_w28_g01.model.Post;
 import com.meli.be_java_hisp_w28_g01.repository.IPostRepository;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
+@Repository
 public class PostRepositoryImpl implements IPostRepository {
     private List<Post> listOfPosts = new ArrayList<>();
 
@@ -36,7 +37,7 @@ public class PostRepositoryImpl implements IPostRepository {
             try {
                 posts = objectMapper.readValue(inputStream, typeRef);
             } catch (IOException e) {
-                throw new RuntimeException("No se pusieron obtener los datos de als publicaciones");
+                throw new RuntimeException("No se pusieron obtener los datos de las publicaciones");
             }
             return posts;
         } catch (IOException e) {
