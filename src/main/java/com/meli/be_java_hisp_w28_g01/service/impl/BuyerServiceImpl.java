@@ -22,7 +22,8 @@ public class BuyerServiceImpl implements IBuyerService {
 
     @Override
     public Optional<Buyer> findById(int id) {
-        Optional<Buyer> buyer = buyerRepository.getAll().stream()
+        Optional<Buyer> buyer = buyerRepository.getAll()
+                .stream()
                 .filter(b->b.getId() == id)
                 .findFirst();
         return buyer;

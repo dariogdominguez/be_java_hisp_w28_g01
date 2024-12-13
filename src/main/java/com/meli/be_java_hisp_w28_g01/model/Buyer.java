@@ -6,5 +6,8 @@ import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 
+@AllArgsConstructor
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Buyer extends User{
 }
