@@ -63,14 +63,20 @@ public class FollowServiceImpl implements IFollowService {
         if (foundBuyer.isEmpty()){
             throw new NotFoundException(userId, "usuario");
         }
-        List<SellerDto> followedSellers = new ArrayList<>();
         List<Follow> follows = followRepository.getAll().stream().filter(f->f.getBuyer().getId() == userId).toList();
+        List<SellerDto> followedSellers = addFollowedSellers(follows);
+        FollowedSellersDto followedSellersDto = new FollowedSellersDto(foundBuyer.get().getId(),foundBuyer.get().getName(),followedSellers);
+
+        return followedSellersDto;
+    }
+
+    private List<SellerDto> addFollowedSellers(List<Follow> follows){
+        List<SellerDto> followedSellers = new ArrayList<>();
         follows.stream()
                 .forEach(f-> followedSellers.add(
-                mapper.convertValue(f.getSeller(),SellerDto.class)
-        ));
-        FollowedSellersDto followedSellersDto = new FollowedSellersDto(foundBuyer.get().getId(),foundBuyer.get().getName(),followedSellers);
-        return followedSellersDto;
+                        mapper.convertValue(f.getSeller(),SellerDto.class)
+                ));
+        return followedSellers;
     }
 
     @Override
