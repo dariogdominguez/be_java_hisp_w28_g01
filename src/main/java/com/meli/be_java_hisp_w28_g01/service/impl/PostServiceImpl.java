@@ -11,8 +11,6 @@ import com.meli.be_java_hisp_w28_g01.service.ISellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class PostServiceImpl implements IPostService {
     @Autowired

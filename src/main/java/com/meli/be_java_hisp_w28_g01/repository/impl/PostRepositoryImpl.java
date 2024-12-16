@@ -3,7 +3,6 @@ package com.meli.be_java_hisp_w28_g01.repository.impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.meli.be_java_hisp_w28_g01.dto.PromoPostDto;
 import com.meli.be_java_hisp_w28_g01.model.Post;
 import com.meli.be_java_hisp_w28_g01.model.PromoPost;
 import com.meli.be_java_hisp_w28_g01.repository.IPostRepository;
