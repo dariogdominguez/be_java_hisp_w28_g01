@@ -1,4 +1,4 @@
-package com.meli.be_java_hisp_w28_g01.model;
+package com.meli.be_java_hisp_w28_g01.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,22 +9,21 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Post {
-    int id;
-    @JsonProperty("seller")
-    Seller seller;
-    @JsonProperty("date")
+public class PostDto implements Serializable {
+    @JsonProperty("user_id")
+    int userId;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     LocalDate date;
     @JsonProperty("product")
-    Product product;
-    @JsonProperty("category")
+    ProductoDto productoDto;
     int category;
-    @JsonProperty("price")
     double price;
+
 }
