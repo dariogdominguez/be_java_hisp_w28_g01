@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "f21f483d-d91a-49c7-b7ba-d2ba80c6e152",
+		"_postman_id": "85fdc714-fac6-4aeb-a20d-52f7ce763161",
 		"name": "SPRINT 1",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "40016548",
-		"_collection_link": "https://sprint-1-meli.postman.co/workspace/SPRINT-1-MELI-Workspace~8531f094-23b3-4d0f-be99-ed048023d8df/collection/40016548-f21f483d-d91a-49c7-b7ba-d2ba80c6e152?action=share&source=collection_link&creator=40016548"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "39991860"
 	},
 	"item": [
 		{
@@ -24,17 +23,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "localhost:8080/products/promo-post",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"products",
-								"promo-post"
-							]
-						}
+						"url": "localhost:8080/products/promo-post"
 					},
 					"response": []
 				},
@@ -87,6 +76,33 @@
 								}
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "5. Add Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"user_id\": 2, \n\"date\": \"29-04-2021\", \n\"product\": {\n\"product_id\": 0, \n\"product_name\": \"Silla Gamer\", \n\"type\": \"Gamer\",\n\"brand\": \"Racer\",\n\"color\": \"Red & Black\",\n\"notes\": \"Special Edition\"\n},\n\"category\": 100, \"price\": 1500.50\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/products/post"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Post",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/products/all"
 					},
 					"response": []
 				}
@@ -264,19 +280,7 @@
 			"request": {
 				"method": "POST",
 				"header": [],
-				"url": {
-					"raw": "localhost:8080/users/{userId}/follow/{userIdToFollow}",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"users",
-						"{userId}",
-						"follow",
-						"{userIdToFollow}"
-					]
-				}
+				"url": "localhost:8080/users/{userId}/follow/{userIdToFollow}"
 			},
 			"response": []
 		},
@@ -285,19 +289,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "localhost:8080/users/{userId}/followers/count",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"users",
-						"{userId}",
-						"followers",
-						"count"
-					]
-				}
+				"url": "localhost:8080/users/{userId}/followers/count"
 			},
 			"response": []
 		},
@@ -306,19 +298,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "localhost:8080/users/{userId}/followers/list",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"users",
-						"{userId}",
-						"followers",
-						"list"
-					]
-				}
+				"url": "localhost:8080/users/{userId}/followers/list"
 			},
 			"response": []
 		},
@@ -327,19 +307,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "localhost:8080/users/{userId}/followed/list",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"users",
-						"{userId}",
-						"followed",
-						"list"
-					]
-				}
+				"url": "localhost:8080/users/{userId}/followed/list"
 			},
 			"response": []
 		},
@@ -357,17 +325,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "localhost:8080/products/post",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"products",
-						"post"
-					]
-				}
+				"url": "localhost:8080/products/post"
 			},
 			"response": []
 		},
@@ -376,19 +334,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "localhost:8080/products/followed/{userId}/list",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"products",
-						"followed",
-						"{userId}",
-						"list"
-					]
-				}
+				"url": "localhost:8080/products/followed/{userId}/list"
 			},
 			"response": []
 		},
@@ -397,19 +343,7 @@
 			"request": {
 				"method": "POST",
 				"header": [],
-				"url": {
-					"raw": "localhost:8080/users/{userId}/unfollow/{userIdToUnfollow}",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"users",
-						"{userId}",
-						"unfollow",
-						"{userIdToUnfollow}"
-					]
-				}
+				"url": "localhost:8080/users/{userId}/unfollow/{userIdToUnfollow}"
 			},
 			"response": []
 		}

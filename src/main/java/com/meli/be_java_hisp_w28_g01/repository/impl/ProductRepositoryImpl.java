@@ -26,6 +26,12 @@ class ProductRepositoryImpl implements IProductRepository {
         return listOfProduct;
     }
 
+    @Override
+    public Product add(Product product) {
+        listOfProduct.add(product);
+        return product;
+    }
+
     public List<Product> loadDataBase() {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("product.json")) {
             if (inputStream == null) {
