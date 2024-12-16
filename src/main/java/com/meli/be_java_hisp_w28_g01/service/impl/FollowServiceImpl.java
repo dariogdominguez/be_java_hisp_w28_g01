@@ -3,6 +3,8 @@ package com.meli.be_java_hisp_w28_g01.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meli.be_java_hisp_w28_g01.dto.FollowDto;
 import com.meli.be_java_hisp_w28_g01.dto.FollowersDto;
+import com.meli.be_java_hisp_w28_g01.exception.FollowAlreadyExistsException;
+import com.meli.be_java_hisp_w28_g01.exception.NotFoundException;
 import com.meli.be_java_hisp_w28_g01.model.Follow;
 import com.meli.be_java_hisp_w28_g01.model.Seller;
 import com.meli.be_java_hisp_w28_g01.repository.IFollowRepository;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class FollowServiceImpl implements IFollowService {
@@ -36,12 +37,12 @@ public class FollowServiceImpl implements IFollowService {
 
         boolean thereIsBuyer = buyerService.findById(userId).isPresent();
         boolean thereIsSeller = sellerService.findById(userIdToFollow).isPresent();
-        if (!thereIsBuyer) throw new RuntimeException("No se encontraon vendedores con ese id");
-        if (!thereIsSeller) throw new RuntimeException("No se encontraon vendedores con ese id");
+        if (!thereIsBuyer) throw new NotFoundException(userId, "No se encontraon vendedores con ese id");
+        if (!thereIsSeller) throw new NotFoundException(userIdToFollow, "No se encontraon vendedores con ese id");
 
         boolean alredyExistFollow = followList.stream().anyMatch( f -> f.getBuyer().getId() == userId && f.getSeller().getId() == userIdToFollow);
         if(alredyExistFollow){
-            throw new RuntimeException("Este coprador ya sigue a este vendedor");
+            throw new FollowAlreadyExistsException(userId, userIdToFollow);
         }
 
         return mapper.convertValue(followRepository.addFollow(new Follow(buyerService.findById(userId).get(), sellerService.findById(userIdToFollow).get())), FollowDto.class);
