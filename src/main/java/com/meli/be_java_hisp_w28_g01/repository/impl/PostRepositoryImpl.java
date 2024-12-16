@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 @Repository
 public class PostRepositoryImpl implements IPostRepository {
     private List<Post> listOfPosts = new ArrayList<>();
@@ -19,7 +20,6 @@ public class PostRepositoryImpl implements IPostRepository {
     public PostRepositoryImpl() throws IOException {
         listOfPosts = loadDataBase();
     }
-
 
     @Override
     public List<Post> getAll() {

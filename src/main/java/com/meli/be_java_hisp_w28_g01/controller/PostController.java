@@ -3,7 +3,6 @@ package com.meli.be_java_hisp_w28_g01.controller;
 import com.meli.be_java_hisp_w28_g01.dto.request.PostDto;
 import com.meli.be_java_hisp_w28_g01.dto.request.PromoPostDto;
 import com.meli.be_java_hisp_w28_g01.service.IPostService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,5 +38,10 @@ public class PostController {
 
 
 
+    @GetMapping("/followed/{userId}/list")
+    public ResponseEntity<?> getProducts(@PathVariable int userId)
+    {
+        return ResponseEntity.ok().body(service.getPostsByUser(userId));
+    }
 
 }
