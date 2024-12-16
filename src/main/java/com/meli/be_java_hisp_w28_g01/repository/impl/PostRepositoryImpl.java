@@ -3,20 +3,23 @@ package com.meli.be_java_hisp_w28_g01.repository.impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.meli.be_java_hisp_w28_g01.dto.PromoPostDto;
 import com.meli.be_java_hisp_w28_g01.model.Post;
+import com.meli.be_java_hisp_w28_g01.model.PromoPost;
 import com.meli.be_java_hisp_w28_g01.repository.IPostRepository;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
+@Repository
 public class PostRepositoryImpl implements IPostRepository {
     private List<Post> listOfPosts = new ArrayList<>();
 
-    public PostRepositoryImpl() throws IOException {
-        listOfPosts = loadDataBase();
-    }
+//    public PostRepositoryImpl() throws IOException {
+//        listOfPosts = loadDataBase();
+//    }
 
     @Override
     public List<Post> getAll() {
@@ -42,5 +45,9 @@ public class PostRepositoryImpl implements IPostRepository {
         } catch (IOException e) {
             throw new RuntimeException("Error al acceder al JSON.", e);
         }
+    }
+    @Override
+    public void addPromoPost(PromoPost promoPost){
+        listOfPosts.add(promoPost);
     }
 }

@@ -16,8 +16,9 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Post {
     @JsonProperty("user")
-    User user;
+    Seller seller;
     @JsonProperty("date")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     LocalDate date;
     @JsonProperty("product")
     Product product;
