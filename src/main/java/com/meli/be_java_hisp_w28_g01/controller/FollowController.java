@@ -21,6 +21,12 @@ public class FollowController {
         return ResponseEntity.status(HttpStatus.OK).body(followService.addFollow(userId,userIdToFollow));
     }
 
+    @GetMapping("/users/{userId}/followed/list")
+    public ResponseEntity<?> getFollowedSellers(@PathVariable int userId){
+        return new ResponseEntity<>(followService.getFollowedSeller(userId),HttpStatus.OK);
+    }
+
+
     @GetMapping("/users/{userId}/followers/count")
     public ResponseEntity<?> getFollowersCount(@PathVariable int userId){
         return new ResponseEntity<>(followService.getFollowersCount(userId), HttpStatus.OK);
