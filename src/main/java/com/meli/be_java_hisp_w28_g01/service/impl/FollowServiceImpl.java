@@ -74,8 +74,8 @@ public class FollowServiceImpl implements IFollowService {
         List<SellerDto> followedSellers = new ArrayList<>();
         follows.stream()
                 .forEach(f-> followedSellers.add(
-                        mapper.convertValue(f.getSeller(),SellerDto.class)
-                ));
+                        new SellerDto(f.getSeller().getId(),f.getSeller().getName())
+                        ));
         return followedSellers;
     }
 

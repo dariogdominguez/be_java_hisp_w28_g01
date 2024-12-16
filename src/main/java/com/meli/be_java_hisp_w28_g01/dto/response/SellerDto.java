@@ -13,6 +13,8 @@ import lombok.experimental.FieldDefaults;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SellerDto {
+    @JsonProperty("user_id")
     int id;
+    @JsonProperty("user_name")
     String name;
 }
