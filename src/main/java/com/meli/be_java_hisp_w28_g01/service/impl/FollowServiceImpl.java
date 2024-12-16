@@ -2,6 +2,9 @@ package com.meli.be_java_hisp_w28_g01.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meli.be_java_hisp_w28_g01.dto.FollowDto;
+import com.meli.be_java_hisp_w28_g01.dto.response.FollowedSellersDto;
+import com.meli.be_java_hisp_w28_g01.dto.response.SellerDto;
+import com.meli.be_java_hisp_w28_g01.model.Buyer;
 import com.meli.be_java_hisp_w28_g01.dto.FollowersDto;
 import com.meli.be_java_hisp_w28_g01.exception.FollowAlreadyExistsException;
 import com.meli.be_java_hisp_w28_g01.exception.NotFoundException;
@@ -14,6 +17,7 @@ import com.meli.be_java_hisp_w28_g01.service.ISellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +55,22 @@ public class FollowServiceImpl implements IFollowService {
     @Override
     public List<Follow> getAll() {
         return followRepository.getAll();
+    }
+
+    @Override
+    public FollowedSellersDto getFollowedSeller(int userId) {
+        Optional<Buyer> foundBuyer = buyerService.findById(userId);
+        if (foundBuyer.isEmpty()){
+            throw new NotFoundException(userId, "usuario");
+        }
+        List<SellerDto> followedSellers = new ArrayList<>();
+        List<Follow> follows = followRepository.getAll().stream().filter(f->f.getBuyer().getId() == userId).toList();
+        follows.stream()
+                .forEach(f-> followedSellers.add(
+                mapper.convertValue(f.getSeller(),SellerDto.class)
+        ));
+        FollowedSellersDto followedSellersDto = new FollowedSellersDto(foundBuyer.get().getId(),foundBuyer.get().getName(),followedSellers);
+        return followedSellersDto;
     }
 
     @Override
