@@ -59,7 +59,7 @@ public class FollowServiceImpl implements IFollowService {
         Optional<Seller> seller = sellerService.findById(userId);
 
         if (seller.isEmpty()) {
-            // Throw exception id not found
+            throw new NotFoundException(userId, "vendedor");
         }
 
         followList = followList.stream().filter(f -> f.getSeller().getId() == userId).toList();
