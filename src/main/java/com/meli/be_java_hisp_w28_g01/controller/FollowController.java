@@ -1,13 +1,11 @@
 package com.meli.be_java_hisp_w28_g01.controller;
 
+import com.meli.be_java_hisp_w28_g01.model.Follow;
 import com.meli.be_java_hisp_w28_g01.service.IFollowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -24,5 +22,10 @@ public class FollowController {
     @GetMapping("/users/{userId}/followers/count")
     public ResponseEntity<?> getFollowersCount(@PathVariable int userId){
         return new ResponseEntity<>(followService.getFollowersCount(userId), HttpStatus.OK);
+    }
+
+    @PostMapping("/users/{userId}/unfollow/{userIdToUnfollow}")
+    public ResponseEntity<?> deleteFollow(@PathVariable int userId, @PathVariable int userIdToUnfollow){
+        return new ResponseEntity<>(followService.deleteFollow(userId, userIdToUnfollow), HttpStatus.OK);
     }
 }

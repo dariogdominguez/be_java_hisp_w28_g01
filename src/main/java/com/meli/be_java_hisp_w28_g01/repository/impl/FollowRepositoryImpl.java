@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class FollowRepositoryImpl implements IFollowRepository {
@@ -39,5 +41,12 @@ public class FollowRepositoryImpl implements IFollowRepository {
     public Follow addFollow(Follow newFollow){
         follows.add(newFollow);
         return newFollow;
+    }
+
+    @Override
+    public Follow deleteFollow(int userId, int userIdToUnfollow) {
+        Follow followToDelete = follows.stream().filter(f -> f.getBuyer().getId() == userId && f.getSeller().getId() == userIdToUnfollow).toList().getFirst();
+        follows.remove(followToDelete);
+        return followToDelete;
     }
 }

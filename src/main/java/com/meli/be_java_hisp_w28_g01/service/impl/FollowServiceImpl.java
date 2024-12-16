@@ -3,7 +3,10 @@ package com.meli.be_java_hisp_w28_g01.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meli.be_java_hisp_w28_g01.dto.FollowDto;
 import com.meli.be_java_hisp_w28_g01.dto.FollowersDto;
+import com.meli.be_java_hisp_w28_g01.exception.FollowNotFoundException;
+import com.meli.be_java_hisp_w28_g01.exception.IsEmptyException;
 import com.meli.be_java_hisp_w28_g01.exception.NotFoundException;
+import com.meli.be_java_hisp_w28_g01.model.Buyer;
 import com.meli.be_java_hisp_w28_g01.model.Follow;
 import com.meli.be_java_hisp_w28_g01.model.Seller;
 import com.meli.be_java_hisp_w28_g01.repository.IFollowRepository;
@@ -64,5 +67,27 @@ public class FollowServiceImpl implements IFollowService {
 
         followList = followList.stream().filter(f -> f.getSeller().getId() == userId).toList();
         return new FollowersDto(seller.get().getId(), seller.get().getName(), followList.size());
+    }
+
+    @Override
+    public FollowDto deleteFollow(int userId, int userIdToUnfollow) {
+        List<Follow> followList = getAll();
+
+        Optional<Seller> seller = sellerService.findById(userIdToUnfollow);
+        if (seller.isEmpty()) {
+            throw new NotFoundException(userId, "vendedor");
+        }
+
+        Optional<Buyer> buyer = buyerService.findById(userId);
+        if (buyer.isEmpty()) {
+            throw new NotFoundException(userId, "comprador");
+        }
+
+        followList = followList.stream().filter(f -> f.getSeller().getId() == userIdToUnfollow && f.getBuyer().getId() == userId).toList();
+        if (followList.isEmpty()){
+            throw new FollowNotFoundException(userId, userIdToUnfollow);
+        }
+
+        return mapper.convertValue(followRepository.deleteFollow(userId, userIdToUnfollow), FollowDto.class);
     }
 }

@@ -10,4 +10,5 @@ public interface IFollowService {
     FollowDto addFollow(int userId, int userIdToFollow);
     List<Follow> getAll();
     FollowersDto getFollowersCount(int userId);
+    FollowDto deleteFollow(int userId, int userIdToUnfollow);
 }
