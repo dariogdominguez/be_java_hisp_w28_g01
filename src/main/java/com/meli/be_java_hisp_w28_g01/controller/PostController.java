@@ -1,6 +1,7 @@
 package com.meli.be_java_hisp_w28_g01.controller;
 
 import com.meli.be_java_hisp_w28_g01.dto.request.PostDto;
+import com.meli.be_java_hisp_w28_g01.dto.request.PromoPostDto;
 import com.meli.be_java_hisp_w28_g01.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,11 @@ public class PostController {
     @PostMapping("/post")
     public ResponseEntity<?> addPost(@RequestBody PostDto postDto){
         return ResponseEntity.ok().body(service.add(postDto));
+    }
+
+    @PostMapping("/promo-post")
+    public ResponseEntity<?> addPromoPost(@RequestBody PromoPostDto promoPostDto){
+        return ResponseEntity.ok().body(service.addPromoPost(promoPostDto));
     }
 
 
