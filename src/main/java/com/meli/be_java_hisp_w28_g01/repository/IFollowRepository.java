@@ -9,4 +9,5 @@ import java.util.List;
 public interface IFollowRepository {
     List<Follow> getAll();
     Follow addFollow(Follow newFollow);
+    Follow deleteFollow(int userId, int userIdToUnfollow);
 }

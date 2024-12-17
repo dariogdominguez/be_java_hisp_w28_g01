@@ -14,4 +14,5 @@ public interface IFollowService {
     FollowedSellersDto getFollowedSeller(int userId);
     FollowersDto getFollowersCount(int userId);
     FollowedSellersDto getFollowedOrderedSeller(int userId, String order);
+    FollowDto deleteFollow(int userId, int userIdToUnfollow);
 }
