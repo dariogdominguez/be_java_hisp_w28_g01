@@ -3,12 +3,8 @@ package com.meli.be_java_hisp_w28_g01.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meli.be_java_hisp_w28_g01.dto.request.PostDto;
 import com.meli.be_java_hisp_w28_g01.dto.request.PromoPostDto;
-import com.meli.be_java_hisp_w28_g01.dto.response.PostDtoResponse;
-import com.meli.be_java_hisp_w28_g01.exception.AlreadyExistsException;
+import com.meli.be_java_hisp_w28_g01.dto.response.*;
 import com.meli.be_java_hisp_w28_g01.dto.request.ProductoDto;
-import com.meli.be_java_hisp_w28_g01.dto.response.PostByUserDto;
-import com.meli.be_java_hisp_w28_g01.dto.response.ResponsePostDto;
-import com.meli.be_java_hisp_w28_g01.dto.response.SellerDto;
 import com.meli.be_java_hisp_w28_g01.exception.NotFoundException;
 import com.meli.be_java_hisp_w28_g01.model.Post;
 import com.meli.be_java_hisp_w28_g01.model.Product;
@@ -23,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -41,11 +38,18 @@ public class PostServiceImpl implements IPostService {
 
 
     @Override
-    public List<PostDtoResponse> getAll() {
+    public List<ResponsePostDto> getAll() {
         return repository.getAll()
                 .stream()
                 .map(s -> {
-                    PostDtoResponse dto = mapper.convertValue(s, PostDtoResponse.class);
+                    ResponsePostDto dto = new ResponsePostDto(
+                            s.getSeller().getId(),
+                            s.getId(),
+                            s.getDate(),
+                            mapper.convertValue(s.getProduct(), ProductDto.class),
+                            s.getCategory(),
+                            s.getPrice()
+                            );
                     dto.setUserId(s.getSeller().getId());
                     return dto;
                 })
@@ -97,6 +101,7 @@ public class PostServiceImpl implements IPostService {
         return convertToDto(filteredPosts, userId);
     }
 
+
     private List<Post> filterSellerPost(List<Integer> sellerIds) {
         LocalDate twoWeeksAgo = LocalDate.now().minusWeeks(2);
 
@@ -116,7 +121,7 @@ public class PostServiceImpl implements IPostService {
     }
 
     private ResponsePostDto toResponsePostDto(Post post) {
-        ProductoDto productDto = new ProductoDto(
+        ProductDto productDto = new ProductDto(
                 post.getProduct().getId(),
                 post.getProduct().getName(),
                 post.getProduct().getType(),
@@ -159,8 +164,28 @@ public class PostServiceImpl implements IPostService {
         );
         repository.add(promoPost);
         return "Se creó la publicación correctamente con el id: " + promoPost.getId();
-
-
-
     }
+
+
+    @Override
+    public PostByUserDto getPostByUserOrderedByDate(int userId, String order) {
+        if (order.isEmpty()){
+            throw new IllegalArgumentException("Se debe ingresar un tipo de ordenamiento");
+        }
+        List<ResponsePostDto> responsePostDtosList= new ArrayList<>();
+        if (order.equals("date_asc")){
+            responsePostDtosList = getPostsByUser(userId).getPosts().stream().sorted(Comparator.comparing(ResponsePostDto::getDate)).toList();
+        }else
+        if (order.equals("date_desc")){
+            responsePostDtosList = getPostsByUser(userId).getPosts().stream().sorted(Comparator.comparing(ResponsePostDto::getDate).reversed()).toList();
+        }
+        else{
+            throw new IllegalArgumentException("Se ingresó un tipo de ordenamiento incorrecto");
+        }
+
+        PostByUserDto postByUserDto = new PostByUserDto(userId,responsePostDtosList);
+        return postByUserDto;
+    }
+
+
 }

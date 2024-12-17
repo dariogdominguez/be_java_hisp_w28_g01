@@ -20,7 +20,7 @@ public class ResponsePostDto {
     @JsonProperty("post_id")
     int postId;
     LocalDate date;
-    ProductoDto product;
+    ProductDto product;
     int category;
     double price;
 }

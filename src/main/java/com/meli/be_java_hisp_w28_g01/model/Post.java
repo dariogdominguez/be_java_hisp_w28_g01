@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Post {
+
     int id;
     @JsonProperty("seller")
     Seller seller;

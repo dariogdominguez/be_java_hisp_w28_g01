@@ -33,7 +33,12 @@ class ProductServiceImpl implements IProductService {
 
     @Override
     public Product add(ProductoDto productoDto) {
-        Product product = mapper.convertValue(productoDto, Product.class);
+        Product product = new Product(productoDto.getId(),
+                productoDto.getName(),
+                productoDto.getType(),
+                productoDto.getBrand(),
+                productoDto.getColor(),
+                productoDto.getNotes());
         return productRepository.add(product);
     }
 }

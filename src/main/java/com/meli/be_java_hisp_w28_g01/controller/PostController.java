@@ -39,9 +39,14 @@ public class PostController {
 
 
     @GetMapping("/followed/{userId}/list")
-    public ResponseEntity<?> getProducts(@PathVariable int userId)
+    public ResponseEntity<?> getProducts(@PathVariable int userId, @RequestParam(required = false) String order )
     {
-        return ResponseEntity.ok().body(service.getPostsByUser(userId));
+        if (order==null){
+            return ResponseEntity.ok().body(service.getPostsByUser(userId));
+        }else {
+            return ResponseEntity.ok().body(service.getPostByUserOrderedByDate(userId, order));
+        }
     }
+
 
 }
