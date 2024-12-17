@@ -43,4 +43,9 @@ public class FollowController {
             return ResponseEntity.status(HttpStatus.OK).body(followersListService.orderUserByName(userId, order));
         }
     }
+
+    @PostMapping("/users/{userId}/unfollow/{userIdToUnfollow}")
+    public ResponseEntity<?> deleteFollow(@PathVariable int userId, @PathVariable int userIdToUnfollow){
+        return new ResponseEntity<>(followService.deleteFollow(userId, userIdToUnfollow), HttpStatus.OK);
+    }
 }
