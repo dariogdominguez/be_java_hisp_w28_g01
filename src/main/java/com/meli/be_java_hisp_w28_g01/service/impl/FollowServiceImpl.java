@@ -5,7 +5,7 @@ import com.meli.be_java_hisp_w28_g01.dto.FollowDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.FollowedSellersDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.SellerDto;
 import com.meli.be_java_hisp_w28_g01.model.Buyer;
-import com.meli.be_java_hisp_w28_g01.dto.FollowersDto;
+import com.meli.be_java_hisp_w28_g01.dto.response.FollowersDto;
 import com.meli.be_java_hisp_w28_g01.exception.FollowAlreadyExistsException;
 import com.meli.be_java_hisp_w28_g01.exception.NotFoundException;
 import com.meli.be_java_hisp_w28_g01.model.Follow;
@@ -41,11 +41,11 @@ public class FollowServiceImpl implements IFollowService {
 
         boolean thereIsBuyer = buyerService.findById(userId).isPresent();
         boolean thereIsSeller = sellerService.findById(userIdToFollow).isPresent();
-        if (!thereIsBuyer) throw new NotFoundException(userId, "No se encontraon vendedores con ese id");
-        if (!thereIsSeller) throw new NotFoundException(userIdToFollow, "No se encontraon vendedores con ese id");
+        if (!thereIsBuyer) throw new NotFoundException(userId, "No se encontraron vendedores con ese id");
+        if (!thereIsSeller) throw new NotFoundException(userIdToFollow, "No se encontraron vendedores con ese id");
 
-        boolean alredyExistFollow = followList.stream().anyMatch( f -> f.getBuyer().getId() == userId && f.getSeller().getId() == userIdToFollow);
-        if(alredyExistFollow){
+        boolean alreadyExistFollow = followList.stream().anyMatch( f -> f.getBuyer().getId() == userId && f.getSeller().getId() == userIdToFollow);
+        if(alreadyExistFollow){
             throw new FollowAlreadyExistsException(userId, userIdToFollow);
         }
 
