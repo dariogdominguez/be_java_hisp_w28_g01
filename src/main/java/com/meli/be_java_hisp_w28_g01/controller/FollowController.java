@@ -5,10 +5,7 @@ import com.meli.be_java_hisp_w28_g01.service.IFollowersListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -18,15 +15,18 @@ public class FollowController {
     @Autowired
     IFollowersListService followersListService;
 
-
     @PostMapping("/users/{userId}/follow/{userIdToFollow}")
     public ResponseEntity<?> addFollow(@PathVariable int userId, @PathVariable int userIdToFollow){
         return ResponseEntity.status(HttpStatus.OK).body(followService.addFollow(userId,userIdToFollow));
     }
 
     @GetMapping("/users/{userId}/followed/list")
-    public ResponseEntity<?> getFollowedSellers(@PathVariable int userId){
-        return new ResponseEntity<>(followService.getFollowedSeller(userId),HttpStatus.OK);
+    public ResponseEntity<?> getFollowedSellers(@PathVariable int userId,  @RequestParam(required = false) String order){
+        if(order == null){
+            return new ResponseEntity<>(followService.getFollowedSeller(userId),HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(followService.getFollowedOrderedSeller(userId, order),HttpStatus.OK);
+        }
     }
 
 
@@ -35,8 +35,12 @@ public class FollowController {
         return new ResponseEntity<>(followService.getFollowersCount(userId), HttpStatus.OK);
     }
 
-    @GetMapping("users/{userId}/followers/list")
-    public ResponseEntity<?> getFollowerList(@PathVariable int userId){
-        return ResponseEntity.status(HttpStatus.OK).body(followersListService.getListOfFollowers(userId));
+    @GetMapping("/users/{userId}/followers/list")
+    public ResponseEntity<?> getFollowerList(@PathVariable int userId, @RequestParam(required = false) String order) {
+        if (order == null) {
+            return ResponseEntity.status(HttpStatus.OK).body(followersListService.getListOfFollowers(userId));
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(followersListService.orderUserByName(userId, order));
+        }
     }
 }
