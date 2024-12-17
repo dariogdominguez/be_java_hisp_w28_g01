@@ -5,6 +5,7 @@ import com.meli.be_java_hisp_w28_g01.dto.request.PostDto;
 import com.meli.be_java_hisp_w28_g01.dto.request.PromoPostDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.*;
 import com.meli.be_java_hisp_w28_g01.dto.request.ProductoDto;
+import com.meli.be_java_hisp_w28_g01.exception.IsEmptyException;
 import com.meli.be_java_hisp_w28_g01.exception.NotFoundException;
 import com.meli.be_java_hisp_w28_g01.model.Post;
 import com.meli.be_java_hisp_w28_g01.model.Product;
@@ -55,17 +56,25 @@ public class PostServiceImpl implements IPostService {
                 })
                 .toList();
     }
+    @Override
+    public List<ResponsePostDto> getByProductType(String type){
+        List<ResponsePostDto> listPostByProductType = getAll().stream()
+                .filter(post -> post.getProduct().getType().equalsIgnoreCase(type))
+                .toList();
+        if(listPostByProductType.isEmpty()){
+            throw new IsEmptyException("productos de tipo "+type);
+        }
+        return listPostByProductType;
+    }
 
     @Override
-    public PostDtoResponse getByid(int id) {
-        if(id<0){
-            throw new IllegalArgumentException("Id no válido");
-        }
+    public ResponsePostDto getByid(int id) {
+        ResponsePostDto PostById = getAll().stream()
+                .filter(post -> post.getPostId() == id)
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException(id, "post"));
 
-        return repository.getAll().stream().filter(p -> p.getId()==id)
-                .map(m->mapper.convertValue(m,PostDtoResponse.class))
-                .findFirst().orElseThrow(() -> new NotFoundException(id, "post"));
-    }
+        return PostById;   }
 
     @Override
     public String add(PostDto postDto) {
