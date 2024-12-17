@@ -105,7 +105,7 @@ public class FollowServiceImpl implements IFollowService {
             followedSellers = addFollowedSellers(follows).stream().sorted(Comparator.comparing(SellerDto::getName)).toList();
         }
         if ("name_dec".equals(order)){
-            followedSellers = addFollowedSellers(follows).stream().sorted(Comparator.comparing(SellerDto::getName)).toList().reversed();
+            followedSellers = addFollowedSellers(follows).stream().sorted(Comparator.comparing(SellerDto::getName).reversed()).toList();
         }
         return new FollowedSellersDto(foundBuyer.get().getId(),foundBuyer.get().getName(),followedSellers);
     }
