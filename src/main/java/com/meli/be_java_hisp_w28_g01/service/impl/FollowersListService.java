@@ -53,7 +53,7 @@ public class FollowersListService implements IFollowersListService {
             buyersFollowers = sellerFollowsList.stream().map(Follow::getBuyer).map( b -> new BuyerDto(b.getId(), b.getName())).sorted(Comparator.comparing(BuyerDto::getName)).toList();
         }
         if ("name_dec".equals(order)){
-            buyersFollowers = sellerFollowsList.stream().map(Follow::getBuyer).map( b -> new BuyerDto(b.getId(), b.getName())).sorted(Comparator.comparing(BuyerDto::getName)).toList().reversed();
+            buyersFollowers = sellerFollowsList.stream().map(Follow::getBuyer).map( b -> new BuyerDto(b.getId(), b.getName())).sorted(Comparator.comparing(BuyerDto::getName).reversed()).toList();
         }
 
         return new FollowersListDto(seller.getId(), seller.getName(), buyersFollowers);
