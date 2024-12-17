@@ -1,4 +1,4 @@
-package com.meli.be_java_hisp_w28_g01.dto;
+package com.meli.be_java_hisp_w28_g01.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -13,6 +13,6 @@ public class FollowersDto {
     int userId;
     @JsonProperty("user_name")
     String userName;
-    @JsonProperty("followers-count")
+    @JsonProperty("followers_count")
     int followersCount;
 }
