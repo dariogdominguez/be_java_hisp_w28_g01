@@ -303,6 +303,21 @@ GET /products/promo-post/count?user_id={userId}
 
 #### Responsable: **Paloma Sosa Morales**
 
+---
+
+## Endpoint Bonus
+
+### US 0012: Obtener las publicaciones según el tipo de producto
+
+```http
+GET /products/type/{productType}
+```
+
+| Parámetro       | Tipo     | Descripción                          |
+| :------------ | :------- | :--------------------------------- |
+| `productType`      | `String`    | **Requerido**. Tipo de categoría |
+
+#### Responsable: **Mateo Ferradans**
 
 ---
 ## 📑 Documentación

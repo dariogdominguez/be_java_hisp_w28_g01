@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface IPostService {
     List<ResponsePostDto> getAll();
-    PostDtoResponse getByid(int id);
+    ResponsePostDto getByid(int id);
     String add(PostDto postDto);
     String addPromoPost(PromoPostDto promoPostDto);
     PostByUserDto getPostsByUser(int userId);
@@ -21,4 +21,6 @@ public interface IPostService {
     PromoPostCountDto getPromoPostCount(int user_id);
 
     PostByUserDto getPostByUserOrderedByDate(int userId, String order);
+
+    List<ResponsePostDto> getByProductType(String productType);
 }

@@ -23,9 +23,14 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> listAllPosts (@PathVariable int id){
+    public ResponseEntity<?> getPostById (@PathVariable int id){
         return ResponseEntity.ok().body(service.getByid(id));
     }
+    @GetMapping("/type/{productType}")
+    public ResponseEntity<?> listPostByProductType (@PathVariable String productType) {
+        return ResponseEntity.ok().body(service.getByProductType(productType));
+    }
+
 
     @PostMapping("/post")
     public ResponseEntity<?> addPost(@RequestBody PostDto postDto){
