@@ -51,7 +51,7 @@ public class PostServiceImpl implements IPostService {
                             s.getSeller().getId(),
                             s.getId(),
                             s.getDate(),
-                            mapper.convertValue(s.getProduct(), ProductoDto.class),
+                            mapper.convertValue(s.getProduct(), ProductDto.class),
                             s.getCategory(),
                             s.getPrice()
                             );
@@ -140,7 +140,7 @@ public class PostServiceImpl implements IPostService {
     }
 
     private ResponsePostDto toResponsePostDto(Post post) {
-        ProductoDto productDto = new ProductoDto(
+        ProductDto productDto = new ProductDto(
                 post.getProduct().getId(),
                 post.getProduct().getName(),
                 post.getProduct().getType(),
@@ -201,6 +201,7 @@ public class PostServiceImpl implements IPostService {
         else{
             throw new IllegalArgumentException("Se ingresó un tipo de ordenamiento incorrecto");
         }
-        return null;
+        PostByUserDto postByUserDto = new PostByUserDto(userId,responsePostDtosList);
+        return postByUserDto;
     }
 }

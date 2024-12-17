@@ -29,7 +29,8 @@ public class FollowRepositoryImpl implements IFollowRepository {
             }
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            TypeReference<List<Follow>> typeRef = new TypeReference<>() {};
+            TypeReference<List<Follow>> typeRef = new TypeReference<>() {
+            };
             return objectMapper.readValue(inputStream, typeRef);
         } catch (IOException e) {
             throw new RuntimeException("Error al acceder al JSON.", e);
@@ -49,10 +50,9 @@ public class FollowRepositoryImpl implements IFollowRepository {
 
     @Override
     public Follow deleteFollow(int userId, int userIdToUnfollow) {
-     //   Follow followToDelete = follows.stream().filter(f -> f.getBuyer().getId() == userId && f.getSeller().getId() == userIdToUnfollow).toList().getFirst();
-       // follows.remove(followToDelete);
-       // return followToDelete;
-        return null;
+        Follow followToDelete = follows.stream().filter(f -> f.getBuyer().getId() == userId && f.getSeller().getId() == userIdToUnfollow).toList().getFirst();
+        follows.remove(followToDelete);
+        return followToDelete;
     }
 
 }
