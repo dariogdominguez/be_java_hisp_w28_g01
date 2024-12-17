@@ -4,7 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meli.be_java_hisp_w28_g01.dto.request.PostDto;
 import com.meli.be_java_hisp_w28_g01.dto.request.PromoPostDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.*;
+import com.meli.be_java_hisp_w28_g01.exception.AlreadyExistsException;
 import com.meli.be_java_hisp_w28_g01.dto.request.ProductoDto;
+import com.meli.be_java_hisp_w28_g01.dto.response.PostByUserDto;
+import com.meli.be_java_hisp_w28_g01.dto.response.ResponsePostDto;
+import com.meli.be_java_hisp_w28_g01.dto.response.SellerDto;
 import com.meli.be_java_hisp_w28_g01.exception.IsEmptyException;
 import com.meli.be_java_hisp_w28_g01.exception.NotFoundException;
 import com.meli.be_java_hisp_w28_g01.model.Post;
@@ -23,6 +27,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostServiceImpl implements IPostService {
@@ -111,6 +116,20 @@ public class PostServiceImpl implements IPostService {
     }
 
 
+    @Override
+    public PromoPostCountDto getPromoPostCount(int userId) {
+        Optional<Seller> foundSeller = sellerService.findById(userId);
+        if (foundSeller.isEmpty()){
+            throw new NotFoundException(userId,"vendedor");
+        }
+        int promoPostCount = (int) repository.getAll()
+                .stream()
+                .filter(p->p.getSeller().getId() == userId && p.getClass() == PromoPost.class)
+                .count();
+        PromoPostCountDto promoPostCountDto = new PromoPostCountDto(userId,foundSeller.get().getName(),promoPostCount);
+        return promoPostCountDto;
+    }
+
     private List<Post> filterSellerPost(List<Integer> sellerIds) {
         LocalDate twoWeeksAgo = LocalDate.now().minusWeeks(2);
 
@@ -191,10 +210,7 @@ public class PostServiceImpl implements IPostService {
         else{
             throw new IllegalArgumentException("Se ingresó un tipo de ordenamiento incorrecto");
         }
-
         PostByUserDto postByUserDto = new PostByUserDto(userId,responsePostDtosList);
         return postByUserDto;
     }
-
-
 }

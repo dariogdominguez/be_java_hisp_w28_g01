@@ -3,6 +3,7 @@ package com.meli.be_java_hisp_w28_g01.controller;
 import com.meli.be_java_hisp_w28_g01.dto.request.PostDto;
 import com.meli.be_java_hisp_w28_g01.dto.request.PromoPostDto;
 import com.meli.be_java_hisp_w28_g01.service.IPostService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,7 +42,10 @@ public class PostController {
         return ResponseEntity.ok().body(service.addPromoPost(promoPostDto));
     }
 
-
+    @GetMapping("/promo-post/count")
+    public ResponseEntity<?> getPromoPostsCount(@RequestParam int user_id){
+        return new ResponseEntity<>(service.getPromoPostCount(user_id), HttpStatus.OK);
+    }
 
     @GetMapping("/followed/{userId}/list")
     public ResponseEntity<?> getProducts(@PathVariable int userId, @RequestParam(required = false) String order )
