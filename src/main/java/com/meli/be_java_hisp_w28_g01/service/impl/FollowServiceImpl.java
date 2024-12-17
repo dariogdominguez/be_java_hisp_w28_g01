@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,5 +91,22 @@ public class FollowServiceImpl implements IFollowService {
 
         followList = followList.stream().filter(f -> f.getSeller().getId() == userId).toList();
         return new FollowersDto(seller.get().getId(), seller.get().getName(), followList.size());
+    }
+
+    @Override
+    public FollowedSellersDto getFollowedOrderedSeller(int userId, String order) {
+        Optional<Buyer> foundBuyer = buyerService.findById(userId);
+        if (foundBuyer.isEmpty()){
+            throw new NotFoundException(userId, "usuario");
+        }
+        List<Follow> follows = followRepository.getAll().stream().filter(f->f.getBuyer().getId() == userId).toList();
+        List<SellerDto> followedSellers = new ArrayList<>();
+        if ("name_asc".equals(order)){
+            followedSellers = addFollowedSellers(follows).stream().sorted(Comparator.comparing(SellerDto::getName)).toList();
+        }
+        if ("name_dec".equals(order)){
+            followedSellers = addFollowedSellers(follows).stream().sorted(Comparator.comparing(SellerDto::getName)).toList().reversed();
+        }
+        return new FollowedSellersDto(foundBuyer.get().getId(),foundBuyer.get().getName(),followedSellers);
     }
 }
