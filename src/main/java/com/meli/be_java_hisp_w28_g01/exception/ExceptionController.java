@@ -38,4 +38,9 @@ public class ExceptionController {
         ExceptionDto exceptionDto = new ExceptionDto(e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionDto);
     }
+    @ExceptionHandler(FollowNotFoundException.class)
+    public ResponseEntity<ExceptionDto> followNotFound(FollowNotFoundException e){
+        ExceptionDto exceptionDto = new ExceptionDto(e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exceptionDto);
+    }
 }
