@@ -10,7 +10,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ProductoDto implements Serializable {
+public class ProductDto implements Serializable {
     @JsonProperty("product_id")
     int id;
     @JsonProperty("product_name")

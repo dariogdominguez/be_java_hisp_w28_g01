@@ -2,7 +2,7 @@ package com.meli.be_java_hisp_w28_g01.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.meli.be_java_hisp_w28_g01.dto.request.ProductoDto;
+import com.meli.be_java_hisp_w28_g01.dto.request.ProductDto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +22,7 @@ public class ResponsePostDto {
     int postId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     LocalDate date;
-    ProductoDto product;
+    ProductDto product;
     int category;
     double price;
 }
