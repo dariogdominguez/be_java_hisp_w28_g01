@@ -43,8 +43,8 @@ public class FollowServiceImpl implements IFollowService {
 
         boolean thereIsBuyer = buyerService.findById(userId).isPresent();
         boolean thereIsSeller = sellerService.findById(userIdToFollow).isPresent();
-        if (!thereIsBuyer) throw new NotFoundException(userId, "No se encontraron vendedores con ese id");
-        if (!thereIsSeller) throw new NotFoundException(userIdToFollow, "No se encontraron vendedores con ese id");
+        if (!thereIsBuyer) throw new NotFoundException(userId, "Comprador");
+        if (!thereIsSeller) throw new NotFoundException(userIdToFollow, "Vendedor");
 
         boolean alreadyExistFollow = followList.stream().anyMatch( f -> f.getBuyer().getId() == userId && f.getSeller().getId() == userIdToFollow);
         if(alreadyExistFollow){

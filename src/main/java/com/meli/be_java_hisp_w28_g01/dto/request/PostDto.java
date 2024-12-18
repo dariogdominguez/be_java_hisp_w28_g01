@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -18,12 +18,17 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PostDto implements Serializable {
     @JsonProperty("user_id")
-    int userId;
+    @NotNull
+    Integer userId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @NotNull( "El date es obligatorio.")
     LocalDate date;
     @JsonProperty("product")
+    @NotNull( "El producto es obligatorio.")
     ProductoDto productoDto;
-    int category;
-    double price;
+    @NotNull( "La category es obligatoria.")
+    Integer category;
+    @NotNull( "El precio es obligatorio.")
+    Double price;
 
 }
