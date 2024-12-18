@@ -105,7 +105,7 @@ public class FollowServiceImpl implements IFollowService {
         if ("name_asc".equals(order)){
             followedSellers = addFollowedSellers(follows).stream().sorted(Comparator.comparing(SellerDto::getName)).toList();
         }
-        if ("name_dec".equals(order)){
+        if ("name_desc".equals(order)){
             followedSellers = addFollowedSellers(follows).stream().sorted(Comparator.comparing(SellerDto::getName).reversed()).toList();
         }
         return new FollowedSellersDto(foundBuyer.get().getId(),foundBuyer.get().getName(),followedSellers);
@@ -117,7 +117,7 @@ public class FollowServiceImpl implements IFollowService {
 
         Optional<Seller> seller = sellerService.findById(userIdToUnfollow);
         if (seller.isEmpty()) {
-            throw new NotFoundException(userId, "vendedor");
+            throw new NotFoundException(userIdToUnfollow, "vendedor");
         }
 
         Optional<Buyer> buyer = buyerService.findById(userId);

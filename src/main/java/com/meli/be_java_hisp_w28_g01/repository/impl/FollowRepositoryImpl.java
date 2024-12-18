@@ -29,7 +29,7 @@ public class FollowRepositoryImpl implements IFollowRepository {
 
     @Override
     public Follow deleteFollow(int userId, int userIdToUnfollow) {
-        Follow followToDelete = follows.stream().filter(f -> f.getBuyer().getId() == userId && f.getSeller().getId() == userIdToUnfollow).toList().getFirst();
+        Follow followToDelete = follows.stream().filter(f -> f.getBuyer().getId() == userId && f.getSeller().getId() == userIdToUnfollow).findFirst().orElse(null);
         follows.remove(followToDelete);
         return followToDelete;
     }
