@@ -25,7 +25,7 @@ public class PromoPostDto implements Serializable {
     LocalDate date;
     @JsonProperty("product")
     @NotNull("El producto es obligatorio")
-    ProductoDto productoDto;
+    ProductDto productDto;
     @NotNull("La category es obligatoria")
     Integer category;
     @NotNull("El price es obligatorio")

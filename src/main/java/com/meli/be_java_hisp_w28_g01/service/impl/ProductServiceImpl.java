@@ -1,7 +1,7 @@
 package com.meli.be_java_hisp_w28_g01.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.meli.be_java_hisp_w28_g01.dto.request.ProductoDto;
+import com.meli.be_java_hisp_w28_g01.dto.request.ProductDto;
 import com.meli.be_java_hisp_w28_g01.model.Product;
 import com.meli.be_java_hisp_w28_g01.repository.IProductRepository;
 import com.meli.be_java_hisp_w28_g01.service.IProductService;
@@ -32,13 +32,13 @@ class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public Product add(ProductoDto productoDto) {
-        Product product = new Product(productoDto.getId(),
-                productoDto.getName(),
-                productoDto.getType(),
-                productoDto.getBrand(),
-                productoDto.getColor(),
-                productoDto.getNotes());
+    public Product add(ProductDto productDto) {
+        Product product = new Product(productDto.getId(),
+                productDto.getName(),
+                productDto.getType(),
+                productDto.getBrand(),
+                productDto.getColor(),
+                productDto.getNotes());
         return productRepository.add(product);
     }
 }

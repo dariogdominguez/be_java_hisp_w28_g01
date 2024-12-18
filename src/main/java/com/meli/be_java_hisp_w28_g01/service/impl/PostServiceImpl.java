@@ -4,8 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meli.be_java_hisp_w28_g01.dto.request.PostDto;
 import com.meli.be_java_hisp_w28_g01.dto.request.PromoPostDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.*;
-import com.meli.be_java_hisp_w28_g01.exception.AlreadyExistsException;
-import com.meli.be_java_hisp_w28_g01.dto.request.ProductoDto;
+import com.meli.be_java_hisp_w28_g01.dto.request.ProductDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.PostByUserDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.ResponsePostDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.SellerDto;
@@ -75,9 +74,9 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     public String add(PostDto postDto) {
-        Product p = productService.findById(postDto.getProductoDto().getId()).orElse(null);
+        Product p = productService.findById(postDto.getProductDto().getId()).orElse(null);
         if (p == null){
-            p = productService.add(postDto.getProductoDto());
+            p = productService.add(postDto.getProductDto());
         }
         Seller seller = sellerService.findById(postDto.getUserId()).orElse(null);
         if (seller == null){
@@ -141,7 +140,7 @@ public class PostServiceImpl implements IPostService {
     }
 
     private ResponsePostDto toResponsePostDto(Post post) {
-        ProductoDto productDto = new ProductoDto(
+        ProductDto productDto = new ProductDto(
                 post.getProduct().getId(),
                 post.getProduct().getName(),
                 post.getProduct().getType(),
@@ -163,9 +162,9 @@ public class PostServiceImpl implements IPostService {
     @Override
     public String addPromoPost(PromoPostDto promoPostDto) {
 
-        Product p = productService.findById(promoPostDto.getProductoDto().getId()).orElse(null);
+        Product p = productService.findById(promoPostDto.getProductDto().getId()).orElse(null);
         if (p == null){
-            p = productService.add(promoPostDto.getProductoDto());
+            p = productService.add(promoPostDto.getProductDto());
         }
 
         Seller seller = sellerService.findById(promoPostDto.getUserId())
