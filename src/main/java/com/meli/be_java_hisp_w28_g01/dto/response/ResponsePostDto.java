@@ -1,5 +1,6 @@
 package com.meli.be_java_hisp_w28_g01.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.meli.be_java_hisp_w28_g01.dto.request.ProductoDto;
 import lombok.AccessLevel;
@@ -19,8 +20,9 @@ public class ResponsePostDto {
     int userId;
     @JsonProperty("post_id")
     int postId;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     LocalDate date;
-    ProductDto product;
+    ProductoDto product;
     int category;
     double price;
 }

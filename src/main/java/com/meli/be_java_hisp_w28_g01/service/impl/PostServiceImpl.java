@@ -48,15 +48,7 @@ public class PostServiceImpl implements IPostService {
         return repository.getAll()
                 .stream()
                 .map(s -> {
-                    ResponsePostDto dto = new ResponsePostDto(
-                            s.getSeller().getId(),
-                            s.getId(),
-                            s.getDate(),
-                            mapper.convertValue(s.getProduct(), ProductDto.class),
-                            s.getCategory(),
-                            s.getPrice()
-                            );
-                    dto.setUserId(s.getSeller().getId());
+                    ResponsePostDto dto = toResponsePostDto(s);
                     return dto;
                 })
                 .toList();
@@ -149,7 +141,7 @@ public class PostServiceImpl implements IPostService {
     }
 
     private ResponsePostDto toResponsePostDto(Post post) {
-        ProductDto productDto = new ProductDto(
+        ProductoDto productDto = new ProductoDto(
                 post.getProduct().getId(),
                 post.getProduct().getName(),
                 post.getProduct().getType(),
@@ -187,7 +179,7 @@ public class PostServiceImpl implements IPostService {
                 p,
                 promoPostDto.getCategory(),
                 promoPostDto.getPrice()*promoPostDto.getDiscount(),
-                promoPostDto.isHasPromo(),
+                promoPostDto.getHasPromo(),
                 promoPostDto.getDiscount()
         );
         repository.add(promoPost);

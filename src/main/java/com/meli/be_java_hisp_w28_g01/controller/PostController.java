@@ -5,6 +5,7 @@ import com.meli.be_java_hisp_w28_g01.dto.request.PromoPostDto;
 import com.meli.be_java_hisp_w28_g01.service.IPostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,12 +34,12 @@ public class PostController {
 
 
     @PostMapping("/post")
-    public ResponseEntity<?> addPost(@RequestBody PostDto postDto){
+    public ResponseEntity<?> addPost(@Validated @RequestBody PostDto postDto){
         return ResponseEntity.ok().body(service.add(postDto));
     }
 
     @PostMapping("/promo-post")
-    public ResponseEntity<?> addPromoPost(@RequestBody PromoPostDto promoPostDto){
+    public ResponseEntity<?> addPromoPost(@Validated @RequestBody PromoPostDto promoPostDto){
         return ResponseEntity.ok().body(service.addPromoPost(promoPostDto));
     }
 
