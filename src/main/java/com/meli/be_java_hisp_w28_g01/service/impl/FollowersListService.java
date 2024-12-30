@@ -1,6 +1,6 @@
 package com.meli.be_java_hisp_w28_g01.service.impl;
 
-import com.meli.be_java_hisp_w28_g01.dto.FollowersListDto;
+import com.meli.be_java_hisp_w28_g01.dto.response.FollowersListDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.BuyerDto;
 import com.meli.be_java_hisp_w28_g01.exception.NotFoundException;
 import com.meli.be_java_hisp_w28_g01.model.Follow;

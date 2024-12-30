@@ -1,7 +1,6 @@
-package com.meli.be_java_hisp_w28_g01.dto;
+package com.meli.be_java_hisp_w28_g01.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.meli.be_java_hisp_w28_g01.dto.response.BuyerDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

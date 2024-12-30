@@ -1,4 +1,4 @@
-package com.meli.be_java_hisp_w28_g01.dto;
+package com.meli.be_java_hisp_w28_g01.dto.response;
 
 import com.meli.be_java_hisp_w28_g01.model.Buyer;
 import com.meli.be_java_hisp_w28_g01.model.Seller;
