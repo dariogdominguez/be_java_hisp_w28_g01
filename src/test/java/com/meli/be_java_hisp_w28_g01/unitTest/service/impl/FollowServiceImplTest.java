@@ -1,7 +1,8 @@
 package com.meli.be_java_hisp_w28_g01.unitTest.service.impl;
 
-import com.meli.be_java_hisp_w28_g01.dto.FollowDto;
+import com.meli.be_java_hisp_w28_g01.dto.response.FollowDto;
 import com.meli.be_java_hisp_w28_g01.exception.FollowAlreadyExistsException;
+import com.meli.be_java_hisp_w28_g01.exception.FollowNotFoundException;
 import com.meli.be_java_hisp_w28_g01.exception.NotFoundException;
 import com.meli.be_java_hisp_w28_g01.model.Buyer;
 import com.meli.be_java_hisp_w28_g01.model.Follow;
@@ -103,5 +104,71 @@ class FollowServiceImplTest {
         when(followRepository.getAll()).thenReturn(existingFollows);
 
         assertThrows(FollowAlreadyExistsException.class, () -> followService.addFollow(1, 2));
+    }
+
+    @Test
+    void deleteFollow() {
+        // Arrange
+        Buyer buyer = new Buyer();
+        buyer.setId(1);
+        when(buyerService.findById(1)).thenReturn(Optional.of(buyer));
+
+        Seller seller = new Seller();
+        seller.setId(2);
+        when(sellerService.findById(2)).thenReturn(Optional.of(seller));
+
+        Follow existingFollow = new Follow(buyer, seller);
+        List<Follow> existingFollows = new ArrayList<>();
+        existingFollows.add(existingFollow);
+        when(followRepository.getAll()).thenReturn(existingFollows);
+
+        // Act
+        followService.deleteFollow(1, 2);
+
+        // Assert
+        verify(followRepository, times(1)).deleteFollow(1, 2);
+    }
+
+    @Test
+    void deleteFollow_ShouldThrowNotFoundException_WhenSellerDontExist() {
+        // Arrange
+        Buyer buyer = new Buyer();
+        buyer.setId(1);
+        when(buyerService.findById(1)).thenReturn(Optional.of(buyer));
+
+        when(sellerService.findById(2)).thenReturn(Optional.empty());
+
+        // Act - Assert
+        assertThrows(NotFoundException.class, () -> followService.deleteFollow(1, 2));
+    }
+
+    @Test
+    void deleteFollow_ShouldThrowNotFoundException_WhenBuyerDontExist() {
+        // Arrange
+        when(buyerService.findById(1)).thenReturn(Optional.empty());
+
+        Seller seller = new Seller();
+        seller.setId(2);
+        when(sellerService.findById(2)).thenReturn(Optional.of(seller));
+
+        // Act - Assert
+        assertThrows(NotFoundException.class, () -> followService.deleteFollow(1, 2));
+    }
+
+    @Test
+    void deleteFollow_ShouldThrowNotFoundException_WhenFollowDontExist() {
+        // Arrange
+        Buyer buyer = new Buyer();
+        buyer.setId(1);
+        when(buyerService.findById(1)).thenReturn(Optional.of(buyer));
+
+        Seller seller = new Seller();
+        seller.setId(2);
+        when(sellerService.findById(2)).thenReturn(Optional.of(seller));
+
+        when(followRepository.getAll()).thenReturn(new ArrayList<>());
+
+        // Act - Assert
+        assertThrows(FollowNotFoundException.class, () -> followService.deleteFollow(1, 2));
     }
 }
