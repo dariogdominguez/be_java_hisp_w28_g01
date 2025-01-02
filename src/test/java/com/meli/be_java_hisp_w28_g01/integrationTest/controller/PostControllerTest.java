@@ -1,6 +1,7 @@
 package com.meli.be_java_hisp_w28_g01.integrationTest.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.meli.be_java_hisp_w28_g01.dto.request.PostDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.ResponsePostDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -35,6 +37,23 @@ public class PostControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(print());
     }
+
+//Bonus - Add Post
+
+    @Test
+    void whenAddPostCalled_withValidPostDto_shouldReturnCreatedPost() throws Exception {
+        PostDto postDto = new PostDto();
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/post")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.postId").value(postDto.getPostId()))
+                .andExpect(jsonPath("$.title").value(postDto.getTitle()));
+    }
+
+
 //T-0005 -> OK(WithoutOrder)
     @Test
     void whenGetProductsCalledWithoutOrder_shouldReturnPosts() throws Exception {
