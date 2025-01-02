@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class FollowServiceImplTest {
+class FollowServiceImplAddFollowTest {
 
     @Mock
     private BuyerServiceImpl buyerService;
@@ -51,19 +51,18 @@ class FollowServiceImplTest {
 
         when(followRepository.getAll()).thenReturn(new ArrayList<>());
 
-        FollowDto followDto = new FollowDto(buyer, seller);
-
-        when(followService.addFollow(1, 2)).thenReturn(followDto);
+        // Crear un nuevo Follow y simular que se agrega correctamente al repositorio
+        Follow follow = new Follow(buyer, seller);
+        when(followRepository.addFollow(any(Follow.class))).thenReturn(follow);
 
         FollowDto result = followService.addFollow(1, 2);
 
         assertNotNull(result);
-
         assertEquals(1, result.getBuyer().getId());
         assertEquals(2, result.getSeller().getId());
     }
 
-   @Test
+    @Test
     void addFollow_ShouldThrowNotFoundException_WhenSellerDontExist() {
 
        Buyer buyer = new Buyer();
