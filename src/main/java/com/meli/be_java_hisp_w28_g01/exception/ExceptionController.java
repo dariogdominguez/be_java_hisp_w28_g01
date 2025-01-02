@@ -1,14 +1,15 @@
 package com.meli.be_java_hisp_w28_g01.exception;
 
-import com.meli.be_java_hisp_w28_g01.dto.ExceptionDto;
+import com.meli.be_java_hisp_w28_g01.dto.response.ExceptionDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
 @ControllerAdvice
 public class ExceptionController {
@@ -54,5 +55,22 @@ public class ExceptionController {
         String error = ex.getLocalizedMessage();
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<ExceptionDto> handleValidationExceptions(MethodArgumentNotValidException e) {
+        ExceptionDto error = new ExceptionDto(Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    protected ResponseEntity<ExceptionDto> handleValidationExceptions(HttpMessageNotReadableException e) {
+        ExceptionDto error = new ExceptionDto(e.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    protected ResponseEntity<ExceptionDto> handleValidationExceptions() {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

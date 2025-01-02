@@ -1,7 +1,7 @@
 package com.meli.be_java_hisp_w28_g01.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.meli.be_java_hisp_w28_g01.dto.FollowDto;
+import com.meli.be_java_hisp_w28_g01.dto.response.FollowDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.FollowedSellersDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.SellerDto;
 import com.meli.be_java_hisp_w28_g01.exception.FollowNotFoundException;
