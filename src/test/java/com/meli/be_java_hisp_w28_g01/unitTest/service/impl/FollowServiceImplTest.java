@@ -1,6 +1,6 @@
 package com.meli.be_java_hisp_w28_g01.unitTest.service.impl;
 
-import com.meli.be_java_hisp_w28_g01.dto.FollowDto;
+import com.meli.be_java_hisp_w28_g01.dto.response.FollowDto;
 import com.meli.be_java_hisp_w28_g01.exception.FollowAlreadyExistsException;
 import com.meli.be_java_hisp_w28_g01.exception.NotFoundException;
 import com.meli.be_java_hisp_w28_g01.model.Buyer;
@@ -51,19 +51,18 @@ class FollowServiceImplTest {
 
         when(followRepository.getAll()).thenReturn(new ArrayList<>());
 
-        FollowDto followDto = new FollowDto(buyer, seller);
-
-        when(followService.addFollow(1, 2)).thenReturn(followDto);
+        // Crear un nuevo Follow y simular que se agrega correctamente al repositorio
+        Follow follow = new Follow(buyer, seller);
+        when(followRepository.addFollow(any(Follow.class))).thenReturn(follow);
 
         FollowDto result = followService.addFollow(1, 2);
 
         assertNotNull(result);
-
         assertEquals(1, result.getBuyer().getId());
         assertEquals(2, result.getSeller().getId());
     }
 
-   @Test
+    @Test
     void addFollow_ShouldThrowNotFoundException_WhenSellerDontExist() {
 
        Buyer buyer = new Buyer();
