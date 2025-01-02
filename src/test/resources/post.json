@@ -18,6 +18,41 @@
   },
   {
     "seller": {
+      "id": 1,
+      "name": "Juan Pérez"
+    },
+    "date": "2024-12-30",
+    "product": {
+      "id": 0,
+      "name": "Silla Gamer",
+      "type": "Gamer",
+      "brand": "Racer",
+      "color": "Red & Black",
+      "notes": "Special Edition"
+    },
+    "category": 1,
+    "price": 150.50
+  },
+  {
+    "seller": {
+      "id": 1,
+      "name": "Juan Pérez"
+    },
+    "date": "2024-12-31",
+    "product": {
+      "id": 0,
+      "name": "Silla Gamer",
+      "type": "Gamer",
+      "brand": "Racer",
+      "color": "Red & Black",
+      "notes": "Special Edition"
+    },
+    "category": 1,
+    "price": 150.50
+  },
+
+  {
+    "seller": {
       "id": 2,
       "name": "María López"
     },
