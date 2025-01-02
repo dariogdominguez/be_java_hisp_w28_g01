@@ -58,6 +58,4 @@ public class PostControllerTest {
                 .andExpect(contentType)
                 .andExpect(jsonPath("$.message").value("La lista de 'productos de tipo adafasf' está vacía."));
     }
-
-
 }
