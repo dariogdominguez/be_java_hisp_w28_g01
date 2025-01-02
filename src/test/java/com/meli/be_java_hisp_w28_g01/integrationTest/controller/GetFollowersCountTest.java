@@ -1,4 +1,4 @@
-package com.meli.be_java_hisp_w28_g01.integration;
+package com.meli.be_java_hisp_w28_g01.integrationTest.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
