@@ -125,11 +125,12 @@ public class FollowServiceImpl implements IFollowService {
         List<Follow> followList = getAll();
 
         Optional<Seller> seller = sellerService.findById(userIdToUnfollow);
+        Optional<Buyer> buyer = buyerService.findById(userId);
+
         if (seller.isEmpty()) {
             throw new NotFoundException(userIdToUnfollow, "vendedor");
         }
 
-        Optional<Buyer> buyer = buyerService.findById(userId);
         if (buyer.isEmpty()) {
             throw new NotFoundException(userId, "comprador");
         }
