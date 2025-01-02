@@ -1,5 +1,5 @@
 package com.meli.be_java_hisp_w28_g01.unitTest.service;
-import com.meli.be_java_hisp_w28_g01.dto.FollowersListDto;
+import com.meli.be_java_hisp_w28_g01.dto.response.FollowersListDto;
 import com.meli.be_java_hisp_w28_g01.exception.IlegalArgumentException;
 import com.meli.be_java_hisp_w28_g01.model.Buyer;
 import com.meli.be_java_hisp_w28_g01.model.Follow;
