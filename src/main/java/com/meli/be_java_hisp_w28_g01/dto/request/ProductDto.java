@@ -15,7 +15,7 @@ public class ProductDto implements Serializable {
     @JsonProperty("product_id")
     @NotNull(message="La id no puede estar vacía.")
     @Min(value = 1, message = "El id debe ser mayor a cero.")
-    int id;
+    Integer id;
 
     @JsonProperty("product_name")
     @NotEmpty(message = "El campo no puede estar vacío.")

@@ -19,7 +19,11 @@ public class PostControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    public PostControllerTest() {}
+    private static ObjectMapper objectMapper;
+
+    public PostControllerTest() {
+        this.objectMapper = new ObjectMapper();
+    }
 
     @Test
     public void whenListAllPost_ShouldReturnListOk() throws Exception{
