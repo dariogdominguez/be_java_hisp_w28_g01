@@ -1,6 +1,6 @@
 package com.meli.be_java_hisp_w28_g01.unitTest.service.impl;
 
-import com.meli.be_java_hisp_w28_g01.dto.FollowDto;
+import com.meli.be_java_hisp_w28_g01.dto.response.FollowDto;
 import com.meli.be_java_hisp_w28_g01.exception.FollowAlreadyExistsException;
 import com.meli.be_java_hisp_w28_g01.exception.NotFoundException;
 import com.meli.be_java_hisp_w28_g01.model.Buyer;
