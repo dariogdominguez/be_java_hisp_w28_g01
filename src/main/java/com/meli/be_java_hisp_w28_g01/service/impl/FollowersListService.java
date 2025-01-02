@@ -2,6 +2,7 @@ package com.meli.be_java_hisp_w28_g01.service.impl;
 
 import com.meli.be_java_hisp_w28_g01.dto.FollowersListDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.BuyerDto;
+import com.meli.be_java_hisp_w28_g01.exception.IlegalArgumentException;
 import com.meli.be_java_hisp_w28_g01.exception.NotFoundException;
 import com.meli.be_java_hisp_w28_g01.model.Follow;
 import com.meli.be_java_hisp_w28_g01.model.Seller;
@@ -40,21 +41,26 @@ public class FollowersListService implements IFollowersListService {
 
     @Override
     public FollowersListDto orderUserByName(int userID, String order) {
+        if (!"name_asc".equals(order) && !"name_desc".equals(order)) {
+            throw new IlegalArgumentException("Ese tipo de ordenamiento no existe.");
+        }
 
-        Seller seller = null;
-        try {
-            seller = sellerService.getAll().stream().filter(f -> f.getId() == userID).findFirst().get();
-        }catch (Exception e){
-            throw new  NotFoundException(userID, "Vendedor");
-        }
-        List<Follow> sellerFollowsList = followRepository.getAll().stream().filter( f -> f.getSeller().getId() == userID).toList();
-        List<BuyerDto> buyersFollowers = new ArrayList<>();
-        if ("name_asc".equals(order)){
-            buyersFollowers = sellerFollowsList.stream().map(Follow::getBuyer).map( b -> new BuyerDto(b.getId(), b.getName())).sorted(Comparator.comparing(BuyerDto::getName)).toList();
-        }
-        if ("name_desc".equals(order)){
-            buyersFollowers = sellerFollowsList.stream().map(Follow::getBuyer).map( b -> new BuyerDto(b.getId(), b.getName())).sorted(Comparator.comparing(BuyerDto::getName).reversed()).toList();
-        }
+        Seller seller = sellerService.getAll().stream()
+                .filter(f -> f.getId() == userID)
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException(userID, "Vendedor"));
+
+        List<Follow> sellerFollowsList = followRepository.getAll().stream()
+                .filter(f -> f.getSeller().getId() == userID)
+                .toList();
+
+        List<BuyerDto> buyersFollowers = sellerFollowsList.stream()
+                .map(Follow::getBuyer)
+                .map(b -> new BuyerDto(b.getId(), b.getName()))
+                .sorted("name_asc".equals(order)
+                        ? Comparator.comparing(BuyerDto::getName)
+                        : Comparator.comparing(BuyerDto::getName).reversed())
+                .toList();
 
         return new FollowersListDto(seller.getId(), seller.getName(), buyersFollowers);
     }

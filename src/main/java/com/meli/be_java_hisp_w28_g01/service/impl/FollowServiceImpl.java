@@ -5,6 +5,7 @@ import com.meli.be_java_hisp_w28_g01.dto.FollowDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.FollowedSellersDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.SellerDto;
 import com.meli.be_java_hisp_w28_g01.exception.FollowNotFoundException;
+import com.meli.be_java_hisp_w28_g01.exception.IlegalArgumentException;
 import com.meli.be_java_hisp_w28_g01.model.Buyer;
 import com.meli.be_java_hisp_w28_g01.dto.response.FollowersDto;
 import com.meli.be_java_hisp_w28_g01.exception.FollowAlreadyExistsException;
@@ -96,20 +97,28 @@ public class FollowServiceImpl implements IFollowService {
 
     @Override
     public FollowedSellersDto getFollowedOrderedSeller(int userId, String order) {
-        Optional<Buyer> foundBuyer = buyerService.findById(userId);
-        if (foundBuyer.isEmpty()){
-            throw new NotFoundException(userId, "usuario");
+        if (!"name_asc".equals(order) && !"name_desc".equals(order)) {
+            throw new IlegalArgumentException("Ese tipo de ordenamiento no existe.");
         }
-        List<Follow> follows = followRepository.getAll().stream().filter(f->f.getBuyer().getId() == userId).toList();
-        List<SellerDto> followedSellers = new ArrayList<>();
-        if ("name_asc".equals(order)){
-            followedSellers = addFollowedSellers(follows).stream().sorted(Comparator.comparing(SellerDto::getName)).toList();
-        }
-        if ("name_desc".equals(order)){
-            followedSellers = addFollowedSellers(follows).stream().sorted(Comparator.comparing(SellerDto::getName).reversed()).toList();
-        }
-        return new FollowedSellersDto(foundBuyer.get().getId(),foundBuyer.get().getName(),followedSellers);
+
+        Buyer buyer = buyerService.findById(userId)
+                .orElseThrow(() -> new NotFoundException(userId, "Usuario"));
+
+        List<Follow> buyerFollowsList = followRepository.getAll().stream()
+                .filter(f -> f.getBuyer().getId() == userId)
+                .toList();
+
+        List<SellerDto> followedSellers = buyerFollowsList.stream()
+                .map(Follow::getSeller)
+                .map(s -> new SellerDto(s.getId(), s.getName()))
+                .sorted("name_asc".equals(order)
+                        ? Comparator.comparing(SellerDto::getName)
+                        : Comparator.comparing(SellerDto::getName).reversed())
+                .toList();
+
+        return new FollowedSellersDto(buyer.getId(), buyer.getName(), followedSellers);
     }
+
 
     @Override
     public FollowDto deleteFollow(int userId, int userIdToUnfollow) {
