@@ -1,19 +1,17 @@
 package com.meli.be_java_hisp_w28_g01.integrationTest.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.meli.be_java_hisp_w28_g01.dto.request.PostDto;
-import com.meli.be_java_hisp_w28_g01.dto.response.ResponsePostDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.List;
-
-import static org.mockito.Mockito.when;
+import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -32,7 +30,7 @@ public class PostControllerTest {
 
     @Test
     public void whenListAllPost_ShouldReturnListOk() throws Exception{
-        mockMvc.perform(MockMvcRequestBuilders.get("/products/all"))
+        mockMvc.perform(get("/products/all"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(print());
@@ -44,9 +42,9 @@ public class PostControllerTest {
     void whenAddPostCalled_withValidPostDto_shouldReturnCreatedPost() throws Exception {
         PostDto postDto = new PostDto();
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/post")
+        mockMvc.perform(post("/post")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content())
+                .content())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.postId").value(postDto.getPostId()))
@@ -59,7 +57,7 @@ public class PostControllerTest {
     void whenGetProductsCalledWithoutOrder_shouldReturnPosts() throws Exception {
         int userId = 1;
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/products/followed/{userId}/list", userId)
+        mockMvc.perform(get("/products/followed/{userId}/list", userId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -70,6 +68,13 @@ public class PostControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    public void whenGetProductsCalledWithUnexistingUserId_shouldReturnNotFound() throws Exception {
+        int userId = -1;
 
-
+        mockMvc.perform(get("/products/followed/{userId}/list", userId))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.message").value("El 'usuario' con el id '-1' no existe."));
+    }
 }

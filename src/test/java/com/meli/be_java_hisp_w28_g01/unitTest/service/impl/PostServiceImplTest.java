@@ -1,7 +1,9 @@
 package com.meli.be_java_hisp_w28_g01.unitTest.service.impl;
 
+import com.meli.be_java_hisp_w28_g01.dto.request.ProductDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.FollowedSellersDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.PostByUserDto;
+import com.meli.be_java_hisp_w28_g01.dto.response.ResponsePostDto;
 import com.meli.be_java_hisp_w28_g01.dto.response.SellerDto;
 import com.meli.be_java_hisp_w28_g01.model.Post;
 import com.meli.be_java_hisp_w28_g01.model.Product;
@@ -45,6 +47,10 @@ public class PostServiceImplTest {
         Seller seller1 = new Seller();
         seller1.setId(1);
         seller1.setName("Pedro");
+        Seller seller2 = new Seller();
+        seller2.setId(2);
+        seller2.setName("Lionel");
+
         Post post1 = new Post();
         post1.setId(1);
         post1.setSeller(seller1);
@@ -61,9 +67,17 @@ public class PostServiceImplTest {
         post2.setCategory(4);
         post2.setPrice(50.0);
 
+        Post post3 = new Post();
+        post3.setId(3);
+        post3.setSeller(seller2);
+        post3.setDate(LocalDate.now().minusDays(20));
+        post3.setProduct(new Product(3,"Product C","C","BrandC","Red","notes"));
+        post3.setCategory(4);
+        post3.setPrice(500.0);
+
         postList.add(post1);
         postList.add(post2);
-
+        postList.add(post3);
     }
 
 //T-0005 -> OK
@@ -101,6 +115,36 @@ public class PostServiceImplTest {
         PostByUserDto postByUserDtoFound = postService.getPostByUserOrderedByDate(userId,order);
         Assert.notEmpty(postByUserDtoFound.getPosts(),"La lista de posts se encuentra vacia");
         validatePostDates(postByUserDtoFound,order);
+    }
+
+    @Test
+    public void whenGetPostsbyUser_shouldReturnList() {
+        List<SellerDto> sellers = List.of(
+                new SellerDto(1, "Pedro"),
+                new SellerDto(2, "Lionel")
+        );
+        FollowedSellersDto followedSellers = new FollowedSellersDto(1, "Jose", sellers);
+
+        PostByUserDto expectedPosts = getPostByUserDto();
+
+        when(followService.getFollowedSeller(1)).thenReturn(followedSellers);
+        when(postRepository.getAll()).thenReturn(postList);
+
+        PostByUserDto result = postService.getPostsByUser(1);
+
+        assertEquals(expectedPosts, result);
+    }
+
+    private PostByUserDto getPostByUserDto() {
+        ProductDto product1 = new ProductDto(1,"Product A","A","BrandA","Blue","notes");
+        ProductDto product2 = new ProductDto(2,"Product B","B","BrandB","Red","notes");
+
+        List<ResponsePostDto> posts = List.of(
+                new ResponsePostDto(1,1, postList.get(0).getDate(), product1, 2, 80.0),
+                new ResponsePostDto(1,2, postList.get(1).getDate(), product2, 4, 50.0)
+        );
+
+        return new PostByUserDto(1, posts);
     }
 
     private AbstractLocalDateAssert validatePostDates(PostByUserDto postByUserDto,String order){
