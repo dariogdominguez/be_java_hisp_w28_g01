@@ -22,7 +22,7 @@ import java.time.LocalDate;
 public class PostDto implements Serializable {
     @JsonProperty("user_id")
     @NotNull(message = "El  id no puede estar vacío.")
-    @Min(value = 0, message = "El id debe ser mayor a cero.")
+    @Min(value = 1, message = "El id debe ser mayor a cero.")
     Integer userId;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
