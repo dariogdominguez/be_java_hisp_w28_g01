@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class FollowServiceImplTest {
+class FollowServiceImplAddFollowTest {
 
     @Mock
     private BuyerServiceImpl buyerService;
