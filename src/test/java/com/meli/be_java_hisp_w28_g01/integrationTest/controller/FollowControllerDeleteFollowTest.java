@@ -29,16 +29,16 @@ public class FollowControllerDeleteFollowTest {
     @Test
     @DisplayName("Al borrar un follow deberia borrarse y devolverse correctamente")
     void deleteFollow_ShouldReturnAFollow() throws Exception {
-        int userId = 1;
-        int userIdToFollow = 1;
+        int userId = 2;
+        int userIdToFollow = 2;
 
         Buyer buyer = new Buyer();
         buyer.setId(userId);
-        buyer.setName("Aspen Fernández");
+        buyer.setName("Celeste Blanco");
 
         Seller seller = new Seller();
         seller.setId(userIdToFollow);
-        seller.setName("Juan Pérez");
+        seller.setName("María López");
 
         FollowDto followDto = new FollowDto(buyer, seller);
 
