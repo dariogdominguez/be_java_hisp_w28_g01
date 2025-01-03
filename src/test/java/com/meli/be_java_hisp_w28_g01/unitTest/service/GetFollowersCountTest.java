@@ -11,6 +11,7 @@ import com.meli.be_java_hisp_w28_g01.service.impl.FollowServiceImpl;
 import com.meli.be_java_hisp_w28_g01.service.impl.SellerServiceImpl;
 import org.apache.coyote.BadRequestException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,14 +26,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Test unitarios para Follow Service - Get Followers Count ")
 class GetFollowersCountTest {
 
     @Mock
     SellerServiceImpl sellerService;
-    @Mock
-    BuyerServiceImpl buyerService;
-    @Mock
-    FollowRepositoryImpl followRepository;
+
     @InjectMocks
     FollowServiceImpl followService;
 
@@ -69,6 +68,7 @@ class GetFollowersCountTest {
     }
 
     @Test
+    @DisplayName("Obtengo la cantidad de seguidores al enviar un id de seller válido")
     void getFollowersCount() {
         //ARRANGE
         Seller seller = new Seller();
@@ -86,6 +86,7 @@ class GetFollowersCountTest {
     }
 
     @Test
+    @DisplayName("Retorno NotFoundException al enviar el id de un seller inexistente")
     void getFollowersCount_ShouldReturnNotFoundException_WhenSellerDoesntExists(){
         //ARRANGE
         int idToFind = 1;

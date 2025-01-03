@@ -25,7 +25,6 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Tests unitarios para obtener lista de seguidores de un seller")
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class GetFollowedListTest {
 
     @Mock
@@ -66,7 +65,7 @@ public class GetFollowedListTest {
         lenient().when(buyerService.findById(1)).thenReturn(Optional.of(buyer));
         lenient().when(followRepository.getAll()).thenReturn(follows);
     }
-    @Order(1)
+
     @ParameterizedTest
     @ValueSource(strings = {"name_asc","name_desc"})
     @DisplayName("Acepta 'name_asc' y 'name_desc' como parámetros válidos de ordenamiento")
@@ -77,7 +76,6 @@ public class GetFollowedListTest {
 
     @Test
     @DisplayName("Obtengo excepcion al ingresar un tipo de ordenamiento inexistente")
-    @Order(3)
     void whenOrderByInvalidType_ThrowsIllegalArgumentException() {
         IlegalArgumentException exception = assertThrows(IlegalArgumentException.class,
                 () -> followService.getFollowedOrderedSeller(1, "invalid_order"));
@@ -86,7 +84,6 @@ public class GetFollowedListTest {
 
     @Test
     @DisplayName("Obtengo la lista por nombre ordenada ascendentemente")
-    @Order(4)
     void whenSortedByNameAsc_ReturnsCorrectlyOrderedList() {
 
         FollowedSellersDto result = followService.getFollowedOrderedSeller(1, "name_asc");
@@ -103,7 +100,6 @@ public class GetFollowedListTest {
 
     @Test
     @DisplayName("Obtengo la lista por nombre ordenada descendentemente")
-    @Order(5)
     void whenSortedByNameDesc_ReturnsCorrectlyOrderedList() {
 
         FollowedSellersDto result = followService.getFollowedOrderedSeller(1, "name_desc");

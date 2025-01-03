@@ -11,6 +11,7 @@ import com.meli.be_java_hisp_w28_g01.repository.impl.FollowRepositoryImpl;
 import com.meli.be_java_hisp_w28_g01.service.impl.BuyerServiceImpl;
 import com.meli.be_java_hisp_w28_g01.service.impl.FollowServiceImpl;
 import com.meli.be_java_hisp_w28_g01.service.impl.SellerServiceImpl;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Test unitarios para Follow Service - Delete Follow")
 public class FollowServiceImplDeleteFollowTest {
     @Mock
     private BuyerServiceImpl buyerService;
@@ -39,6 +41,7 @@ public class FollowServiceImplDeleteFollowTest {
     private FollowServiceImpl followService;
 
     @Test
+    @DisplayName("Se borra un follow exitosamente al enviar Id de buyer y de seller válidos")
     void deleteFollow() {
         // Arrange
         Buyer buyer = new Buyer();
@@ -62,6 +65,7 @@ public class FollowServiceImplDeleteFollowTest {
     }
 
     @Test
+    @DisplayName("Retorna Not Found Exception al enviar un id de seller inexistente")
     void deleteFollow_ShouldThrowNotFoundException_WhenSellerDontExist() {
         // Arrange
         Buyer buyer = new Buyer();
@@ -75,6 +79,7 @@ public class FollowServiceImplDeleteFollowTest {
     }
 
     @Test
+    @DisplayName("Retorna Not Found Exception al enviar un id de buyer inexistente")
     void deleteFollow_ShouldThrowNotFoundException_WhenBuyerDontExist() {
         // Arrange
         when(buyerService.findById(1)).thenReturn(Optional.empty());
@@ -88,6 +93,7 @@ public class FollowServiceImplDeleteFollowTest {
     }
 
     @Test
+    @DisplayName("Retorna FollowNotFoundException al enviar datos de un follow inexistente")
     void deleteFollow_ShouldThrowNotFoundException_WhenFollowDontExist() {
         // Arrange
         Buyer buyer = new Buyer();

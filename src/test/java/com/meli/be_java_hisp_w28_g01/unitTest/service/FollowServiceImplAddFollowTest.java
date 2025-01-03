@@ -10,6 +10,7 @@ import com.meli.be_java_hisp_w28_g01.repository.impl.FollowRepositoryImpl;
 import com.meli.be_java_hisp_w28_g01.service.impl.BuyerServiceImpl;
 import com.meli.be_java_hisp_w28_g01.service.impl.FollowServiceImpl;
 import com.meli.be_java_hisp_w28_g01.service.impl.SellerServiceImpl;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Test unitarios para Follow Service - Add Follow")
 class FollowServiceImplAddFollowTest {
 
     @Mock
@@ -40,6 +42,7 @@ class FollowServiceImplAddFollowTest {
     private FollowServiceImpl followService;
 
     @Test
+    @DisplayName("Se crea exitosamente un follow al enviar seller y buyer válidos")
     void addFollow() {
         Buyer buyer = new Buyer();
         buyer.setId(1);
@@ -63,6 +66,7 @@ class FollowServiceImplAddFollowTest {
     }
 
     @Test
+    @DisplayName("Retorna exception Not Found cuando se envía un seller inexistente")
     void addFollow_ShouldThrowNotFoundException_WhenSellerDontExist() {
 
        Buyer buyer = new Buyer();
@@ -73,6 +77,7 @@ class FollowServiceImplAddFollowTest {
        assertThrows(NotFoundException.class, () -> followService.addFollow(1, 2));
    }
    @Test
+   @DisplayName("Retorna exception Not Found cuando se envía un buyer inexistente")
     void addFollow_ShouldThrowNotFoundException_WhenBuyerDontExist() {
 
        Seller seller = new Seller();
@@ -85,6 +90,7 @@ class FollowServiceImplAddFollowTest {
 
 
     @Test
+    @DisplayName("Retorna exception FollowAlreadyExistsException cuando el buyer ya sigue al seller")
     void addFollow_ShouldThrowFollowAlreadyExistsException_WhenFollowExists() {
         Buyer buyer = new Buyer();
         buyer.setId(1);

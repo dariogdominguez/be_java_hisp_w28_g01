@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("Tests para obtener lista de seguidos de un buyer")
 public class GetFollowerListTest {
 
@@ -70,14 +69,12 @@ public class GetFollowerListTest {
     @ParameterizedTest
     @ValueSource(strings = {"name_asc","name_desc"})
     @DisplayName("Acepta 'name_asc' y 'name_desc' como parámetros válidos de ordenamiento")
-    @Order(1)
     void whenOrderByNameAscOrDesc_ValidatesOrderTypeSuccessfully(String order) {
         assertDoesNotThrow(() -> followersListService.orderUserByName(1, order));
     }
 
     @Test
     @DisplayName("Obtengo excepcion al ingresar un tipo de ordenamiento inexistente")
-    @Order(3)
     void whenOrderByInvalidType_ThrowsIllegalArgumentException() {
         IlegalArgumentException exception = assertThrows(
                 IlegalArgumentException.class,
@@ -89,7 +86,6 @@ public class GetFollowerListTest {
 
     @Test
     @DisplayName("Obtengo la lista por nombre ordenada ascendentemente")
-    @Order(4)
     void whenSortedByNameAsc_ReturnsCorrectlyOrderedList() {
 
         FollowersListDto result = followersListService.orderUserByName(1, "name_asc");
@@ -106,7 +102,6 @@ public class GetFollowerListTest {
 
     @Test
     @DisplayName("Obtengo la lista por nombre ordenada descendentemente")
-    @Order(5)
     void whenSortedByNameDesc_ReturnsCorrectlyOrderedList() {
 
         FollowersListDto result = followersListService.orderUserByName(1, "name_desc");

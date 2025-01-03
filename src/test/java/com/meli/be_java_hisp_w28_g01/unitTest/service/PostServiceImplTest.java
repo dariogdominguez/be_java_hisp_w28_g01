@@ -13,6 +13,7 @@ import com.meli.be_java_hisp_w28_g01.service.impl.FollowServiceImpl;
 import com.meli.be_java_hisp_w28_g01.service.impl.PostServiceImpl;
 import org.assertj.core.api.AbstractLocalDateAssert;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,6 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Test unitarios para Post Service")
 public class PostServiceImplTest {
     @Mock
     private FollowServiceImpl followService;
@@ -83,6 +85,7 @@ public class PostServiceImplTest {
 //T-0005 -> OK
     @ParameterizedTest
     @ValueSource(strings = {"date_asc", "date_desc"})
+    @DisplayName("Valida que la solicitud de lista de post no arroje excepción al enviar parámetro de ordenamiento válido")
     void whenGetPostByUserOrderedByDateIsCalled_shouldAcceptValidOrderingTypes(String order) {
         int userId = 1;
         FollowedSellersDto followedSellersDto = new FollowedSellersDto(1,"Tomas",List.of(new SellerDto(1,"Pedro")));
@@ -95,6 +98,7 @@ public class PostServiceImplTest {
     }
 //T-0005 -> NO_OK
     @Test
+    @DisplayName("Valida que arroje IllegalArgumentException al enviar por parámetro un order inválido al solicitar lista de post")
     void whenGetPostByUserOrderedByDateIsCalledWithInvalidOrder_shouldThrowException() {
         int userId = 3;
         String order = "invalid_order";
@@ -107,6 +111,7 @@ public class PostServiceImplTest {
 //T-0006 -> OK
     @ParameterizedTest
     @ValueSource(strings = {"date_asc", "date_desc"})
+    @DisplayName("Obtengo lista de post ordenada por fecha válida según el tipo de orden enviado por parámetro")
     void whenGetPostByUserOrderedByDateIsCalledWithAscOrder_shouldReturnOrderedList(String order){
         int userId = 1;
         FollowedSellersDto followedSellersDto = new FollowedSellersDto(1,"Tomas",List.of(new SellerDto(1,"Pedro")));
@@ -118,6 +123,7 @@ public class PostServiceImplTest {
     }
 
     @Test
+    @DisplayName("Obtengo lista de post sin envío de parámetro de ordenamiento, enviando solo userId")
     public void whenGetPostsbyUser_shouldReturnList() {
         List<SellerDto> sellers = List.of(
                 new SellerDto(1, "Pedro"),
