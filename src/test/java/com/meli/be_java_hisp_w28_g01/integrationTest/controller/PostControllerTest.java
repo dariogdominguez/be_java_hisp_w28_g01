@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.meli.be_java_hisp_w28_g01.dto.request.PostDto;
 import com.meli.be_java_hisp_w28_g01.dto.request.ProductDto;
+import com.meli.be_java_hisp_w28_g01.dto.request.PromoPostDto;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,5 +123,29 @@ public class PostControllerTest {
                 .andExpect(status)
                 .andExpect(contentType)
                 .andExpect(jsonPath("$.message").value("La lista de 'productos de tipo adafasf' está vacía."));
+    }
+
+    @Test
+    public void whenAddPromoPostCalled_withValidPostDto_shouldReturnCreatedPost() throws Exception {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        PromoPostDto postDto = new PromoPostDto();
+        postDto.setDate(LocalDate.parse(LocalDate.now().minusDays(3).format(formatter),formatter));
+        postDto.setUserId(1);
+        postDto.setProductDto(new ProductDto(150,"Aire Acondicionado Split","A","Acme","Black","notes" ));
+        postDto.setPrice(350000.0);
+        postDto.setCategory(1);
+        postDto.setDiscount(5.0);
+        postDto.setHasPromo(true);
+
+        String payloadJson = objectMapper.writeValueAsString(postDto);
+
+        mockMvc.perform(post("/products/promo-post")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(payloadJson)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().string("Se creó la publicación correctamente con el id: 5"))
+                .andExpect(content().contentType("text/plain;charset=UTF-8"))
+                .andDo(print());
     }
 }
