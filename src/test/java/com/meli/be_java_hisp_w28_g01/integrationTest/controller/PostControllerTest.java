@@ -126,7 +126,7 @@ public class PostControllerTest {
     }
 
     @Test
-    public void testearPromopost() throws Exception {
+    public void whenAddPromoPostCalled_withValidPostDto_shouldReturnCreatedPost() throws Exception {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         PromoPostDto postDto = new PromoPostDto();
         postDto.setDate(LocalDate.parse(LocalDate.now().minusDays(3).format(formatter),formatter));
