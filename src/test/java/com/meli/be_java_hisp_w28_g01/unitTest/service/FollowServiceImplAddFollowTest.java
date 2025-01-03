@@ -43,7 +43,7 @@ class FollowServiceImplAddFollowTest {
 
     @Test
     @DisplayName("Se crea exitosamente un follow al enviar seller y buyer válidos")
-    void addFollow() {
+    void addFollow_ShouldCreateFollow_WhenBuyerAndSellerAreValid() {
         Buyer buyer = new Buyer();
         buyer.setId(1);
         when(buyerService.findById(1)).thenReturn(Optional.of(buyer));

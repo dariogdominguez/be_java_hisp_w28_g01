@@ -28,7 +28,7 @@ class FollowControllerAddFollowTest {
 
     @Test
     @DisplayName("Al agregar un follow deberia crearse y devolverse correctamente")
-    void addFollow_ShouldReturnAFollow() throws Exception {
+    void addFollow_ShouldReturnAFollow_WhenBuyerAndSellerAreValid() throws Exception {
         int userId = 1;
         int userIdToFollow = 2;
 
