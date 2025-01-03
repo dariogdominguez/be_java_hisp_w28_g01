@@ -318,8 +318,25 @@ GET /products/type/{productType}
 | `productType`      | `String`    | **Requerido**. Tipo de categoría |
 
 #### Responsable: **Mateo Ferradans**
+---
+## 🔎 Tests
+
+| **ID de Test** | **Descripción**                                                                                         | **Comportamiento Esperado**                                                                                          | **Tipo de Test**           | **Responsable**        |
+| :------------- | :----------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------- | :-------------------------- | :--------------------- |
+| `T-0001`       | Verificar que el usuario a seguir exista. (US-0001)                                                   | Se cumple: **Permite continuar con normalidad.**  \ No se cumple: **Notifica la no existencia mediante una excepción.** | Unitarios, Integración      | Dario Dominguez       |
+| `T-0002`       | Verificar que el usuario a dejar de seguir exista. (US-0007)                                          | Se cumple: **Permite continuar con normalidad.**  \ No se cumple: **Notifica la no existencia mediante una excepción.** | Unitarios, Integración      | Melanie Márquez C.    |
+| `T-0003`       | Verificar que el tipo de ordenamiento alfabético exista. (US-0008)                                    | Se cumple: **Permite continuar con normalidad.**  \ No se cumple: **Notifica la no existencia mediante una excepción.** | Unitarios, Integración      | Mateo Ferradans       |
+| `T-0004`       | Verificar el correcto ordenamiento ascendente y descendente por nombre. (US-0008)                     | **Devuelve la lista ordenada según el criterio solicitado.**                                                           | Unitarios                   | Mateo Ferradans       |
+| `T-0005`       | Verificar que el tipo de ordenamiento por fecha exista. (US-0009)                                     | Se cumple: **Permite continuar con normalidad.**  \ No se cumple: **Notifica la no existencia mediante una excepción.** | Unitarios, Integración      | Melania Grisel        |
+| `T-0006`       | Verificar el correcto ordenamiento ascendente y descendente por fecha. (US-0009)                      | **Verifica el correcto ordenamiento ascendente y descendente por fecha.**                                            | Unitarios                   | Melania Grisel, Paloma Sosa |
+| `T-0007`       | Verificar que la cantidad de seguidores de un determinado usuario sea correcta. (US-0002)              | **Devuelve el cálculo correcto del total de la cantidad de seguidores que posee un usuario.**                         | Unitarios, Integración      | Paloma Sosa           |
+| `T-0008`       | Verificar que la consulta de publicaciones realizadas en las últimas dos semanas sea efectiva. (US-0006) | **Devuelve únicamente los datos de las publicaciones que tengan fecha dentro de las últimas dos semanas.**            | Unitarios, Integración      | Facundo Delavalle     |
+| `T-0009`   | Verificar que se cree un Post correctamente y que el resultado incluya los datos esperados del Post creado. (US-0005)        | **Crea correctamente el Post y devuelve el Post creado.**                                                              | Integración                | Melania Grisel        |
+| `T-0010`   | Verificar que se obtenga una lista de publicaciones por tipo de producto. (US-0012)                                           | Se cumple: **Devuelve una lista de publicaciones filtradas por tipo de producto.** \ No se cumple: **Lanza una excepción indicando el error.** | Integración                | Dario Dominguez       |
+
 
 ---
+
 ## 📑 Documentación
 
 [Diagrama de clases: Lucidchart](https://lucid.app/lucidchart/fa13249b-4a17-4ca0-8332-e38ad023e012/edit?invitationId=inv_6cd69469-5a0e-41d8-ac89-7499d57c5d11)
