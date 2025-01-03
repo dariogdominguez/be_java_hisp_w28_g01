@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.meli.be_java_hisp_w28_g01.dto.request.PostDto;
 import com.meli.be_java_hisp_w28_g01.dto.request.ProductDto;
 import com.meli.be_java_hisp_w28_g01.dto.request.PromoPostDto;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@DisplayName("Tests de integración para Post")
 public class PostControllerTest {
 
     @Autowired
@@ -41,6 +43,7 @@ public class PostControllerTest {
     }
 
     @Test
+    @DisplayName("Obtengo lista de post OK sin envío de parámetros")
     public void whenListAllPost_ShouldReturnListOk() throws Exception{
         mockMvc.perform(get("/products/all"))
                 .andExpect(status().isOk())
@@ -51,7 +54,7 @@ public class PostControllerTest {
 //Bonus - Add Post
 
     @Test
-    @Order(1)
+    @DisplayName("Obtengo el post creado al enviar un post con formato válido")
     void whenAddPostCalled_withValidPostDto_shouldReturnCreatedPost() throws Exception {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         PostDto postDto = new PostDto();
@@ -75,6 +78,7 @@ public class PostControllerTest {
 
 //T-0005 -> OK(WithoutOrder)
     @Test
+    @DisplayName("Obtengo lista de posts de seller que sigue un buyer, sin el envío de parámetros de orden - OK")
     void whenGetProductsCalledWithoutOrder_shouldReturnPosts() throws Exception {
         int userId = 1;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -91,6 +95,7 @@ public class PostControllerTest {
     }
 
     @Test
+    @DisplayName("Retorna exception Not Found al solicitar lista de post enviando usuario inexistente")
     public void whenGetProductsCalledWithUnexistingUserId_shouldReturnNotFound() throws Exception {
         int userId = -1;
 
@@ -101,6 +106,7 @@ public class PostControllerTest {
     }
 
     @Test
+    @DisplayName("Obtengo lista de post OK al enviar un type válido y existente")
     void  whenGet_listPostByProductType_shouldResponseAList () throws Exception {
         String productType = "Gamer";
 
@@ -113,6 +119,7 @@ public class PostControllerTest {
     }
 
     @Test
+    @DisplayName("Retorna exception Bad Request al enviar un product type inválido")
     void  whenGet_listPostByProductType_shouldThowException () throws Exception {
         String productType = "adafasf";
 
@@ -126,6 +133,7 @@ public class PostControllerTest {
     }
 
     @Test
+    @DisplayName("Obtengo el promo post creado al enviar un promo post con formato válido\"")
     public void whenAddPromoPostCalled_withValidPostDto_shouldReturnCreatedPost() throws Exception {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         PromoPostDto postDto = new PromoPostDto();
