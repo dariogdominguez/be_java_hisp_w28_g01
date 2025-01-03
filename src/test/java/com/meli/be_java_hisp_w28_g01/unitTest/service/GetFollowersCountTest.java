@@ -31,7 +31,10 @@ class GetFollowersCountTest {
 
     @Mock
     SellerServiceImpl sellerService;
-
+    @Mock
+    BuyerServiceImpl buyerService;
+    @Mock
+    FollowRepositoryImpl followRepository;
     @InjectMocks
     FollowServiceImpl followService;
 
@@ -69,7 +72,7 @@ class GetFollowersCountTest {
 
     @Test
     @DisplayName("Obtengo la cantidad de seguidores al enviar un id de seller válido")
-    void getFollowersCount() {
+    void getFollowersCount_ShouldReturnFollowersCount_WhenSellerIdExists() {
         //ARRANGE
         Seller seller = new Seller();
         seller.setId(1);

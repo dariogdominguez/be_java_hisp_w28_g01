@@ -8,7 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -19,28 +20,29 @@ public class GetFollowersCountTest {
 
     @Test
     @DisplayName("Obtengo cantidad de seguidores Ok enviando id de seller válido")
-    void getFollowersCountOk() throws Exception{
+    void getFollowersCount_ShouldReturnFollowersCountOk_WhenSellerIdExists() throws Exception{
         int userId = 1;
         mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}/followers/count",userId))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.user_id").value(userId));
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.user_id").value(userId));
 
     }
 
     @Test
     @DisplayName("Retorna excepción Not Found al enviar un seller inexitente")
-    void getFollowersCountNotFound() throws Exception{
+    void getFollowersCount_ShouldReturnNotFound_WhenSellerIdDesntExists() throws Exception{
         int userId = 1000;
         mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}/followers/count",userId))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("El 'vendedor' con el id '1000' no existe."));
     }
 
     @Test
     @DisplayName("Retorna excepción Bad Request al enviar un userID con formato inválido")
-    void getFollowersCountBadRequest() throws Exception{
+    void getFollowersCount_ShouldReturnBadRequest_WhenSellerIdHasIncorrectFormat() throws Exception{
         String userId = "test";
         mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}/followers/count",userId))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+                .andExpect(status().isBadRequest());
     }
 }
