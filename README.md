@@ -1,6 +1,10 @@
 # SocialMeli
 ![Logo](https://i.imgur.com/tmyP1Q6.png)
 
+![Version: Sprint](https://img.shields.io/badge/Version:_Sprint-2-black?labelColor=purple&style=flat-square&logoWidth=10)
+
+![Test: Line Coverage](https://img.shields.io/badge/Test:%20Line%20Coverage-83%25-green?labelColor=gray&style=flat-square&logoColor=white&logoWidth=10)
+
 
 ## ℹ️ Descripción
 **SocialMeli** es una API Rest desarrollada para Mercado Libre que permite estrechar los lazos entre compradores y vendedores, promoviendo una experiencia innovadora. Los usuarios pueden seguir a sus vendedores favoritos, recibir actualizaciones sobre publicaciones recientes y acceder a promociones exclusivas. Esta versión beta implementa funcionalidades clave que forman parte de una futura plataforma social.
