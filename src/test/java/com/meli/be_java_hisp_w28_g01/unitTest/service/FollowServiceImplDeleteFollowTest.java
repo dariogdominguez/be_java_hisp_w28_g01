@@ -42,7 +42,7 @@ public class FollowServiceImplDeleteFollowTest {
 
     @Test
     @DisplayName("Se borra un follow exitosamente al enviar Id de buyer y de seller válidos")
-    void deleteFollow() {
+    void deleteFollow_ShouldDeleteFollow_WhenBuyerIdAndSellerIdAreValid() {
         // Arrange
         Buyer buyer = new Buyer();
         buyer.setId(1);

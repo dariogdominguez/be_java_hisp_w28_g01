@@ -35,7 +35,7 @@ public class FollowControllerFollowedListTest {
 
     @Test
     @DisplayName("Obtener la lista de seguidos sin orden especificado")
-    void getFollowedList() throws Exception{
+    void whenOrderEmpty_ShouldReturnFollowedList() throws Exception{
         mockMvc.perform(get("/users/{userId}/followed/list",5))
                 .andExpect(status().isOk())
                 .andDo(print());

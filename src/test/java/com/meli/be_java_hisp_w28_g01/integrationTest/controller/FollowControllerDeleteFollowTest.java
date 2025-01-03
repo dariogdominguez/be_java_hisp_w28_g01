@@ -28,7 +28,7 @@ public class FollowControllerDeleteFollowTest {
 
     @Test
     @DisplayName("Al borrar un follow deberia borrarse y devolverse correctamente")
-    void deleteFollow_ShouldReturnAFollow() throws Exception {
+    void deleteFollow_ShouldReturnAFollow_WhenBuyerIdAndSellerIdAreValid() throws Exception {
         int userId = 2;
         int userIdToFollow = 2;
 
