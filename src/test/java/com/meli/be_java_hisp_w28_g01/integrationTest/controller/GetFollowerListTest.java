@@ -38,4 +38,23 @@ class GetFollowerListTest {
                 .andExpect(status().isBadRequest())
                 .andDo(print());
     }
+
+    @Test
+    @DisplayName("Obtener la lista de seguidores sin orden especificado")
+    void getFollowersList() throws Exception{
+        mockMvc.perform(get("/users/{userId}/followers/list",5))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("Lanzar excepcion cuando el id especificado no existe")
+    void whenIdInvalid_ThrowsException() throws Exception {
+        int userId = 999;
+
+        mockMvc.perform(get("/users/{userId}/followers/list",userId))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.message").value("El 'Vendedor' con el id '999' no existe."));
+    }
 }
