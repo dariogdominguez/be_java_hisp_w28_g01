@@ -41,7 +41,7 @@ class GetFollowerListTest {
 
     @Test
     @DisplayName("Obtener la lista de seguidores sin orden especificado")
-    void getFollowersList() throws Exception{
+    void whenOrderEmpty_ReturnFollowersList() throws Exception{
         mockMvc.perform(get("/users/{userId}/followers/list",5))
                 .andExpect(status().isOk())
                 .andDo(print());
